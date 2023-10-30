@@ -8,10 +8,10 @@ from flask_restful import Resource
 
 # Local imports
 from config import app, api
-from models import db
+
 
 # Add your model imports
-
+from models import db
 
 # Views go here!
 
