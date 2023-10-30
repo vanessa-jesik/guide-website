@@ -38,12 +38,41 @@ class Client(db.Model, SerializerMixin):
     # Add validation
 
     def __repr__(self):
-        return f"<Client {self.first_name} {self.last_name} | DOB {self.dob} | {self.sex} | Username {self.username}"
+        return f"<Client {self.first_name} {self.last_name} | DOB {self.dob} | {self.sex} | Username {self.username}>"
 
 
 class Trip(db.Model, SerializerMixin):
-    __tableName__ = "trips"
+    __tablename__ = "trips"
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     length = db.Column(db.Float, nullable=False)
+
+    # Add relationship
+
+    # Add serialization rules
+
+    # Add validation
+
+    def __repr__(self):
+        return f"<Trip: {self.name} | Length: {self.length}>"
+
+
+class ClientTrip(db.Model, SerializerMixin):
+    __tablename__ = "client_trips"
+
+    id = db.Column(db.Integer, primary_key=True)
+    start_date = db.Column(db.Date, nullable=False)
+    end_date = db.Column(db.Date, nullable=False)
+
+    client_id = db.Column(db.Integer, db.ForeignKey("clients.id"), nullable=False)
+    trip_id = db.Column(db.Integer, db.ForeignKey("trips.id"), nullable=False)
+
+    # Add relationship
+
+    # Add serialization rules
+
+    # Add validation
+
+    def __repr__(self):
+        return f"<Client Trip {self.id} Starts: {self.start_date} Ends: {self.end_date} Client ID {self.client_id} Trip ID {self.trip_id}>"
