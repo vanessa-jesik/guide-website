@@ -18,9 +18,11 @@ class Client(db.Model, SerializerMixin):
     _password_hash = db.Column(db.String, nullable=False)
 
     # Add relationship
+    client_trips = db.relationship("ClientTrip", back_populates="client")
+    trips = association_proxy("client_trips", "trip")
 
     # Add serialization rules
-    serialize_rules = ("-_password_hash",)
+    serialize_rules = ("-_password_hash", "-client_trips", "-trips")
 
     # Password
     @hybrid_property
@@ -49,8 +51,11 @@ class Trip(db.Model, SerializerMixin):
     length = db.Column(db.Float, nullable=False)
 
     # Add relationship
+    client_trips = db.relationship("ClientTrip", back_populates="trip")
+    clients = association_proxy("client_trips", "client")
 
     # Add serialization rules
+    serialize_rules = ("-client_trips", "-clients")
 
     # Add validation
 
@@ -69,8 +74,11 @@ class ClientTrip(db.Model, SerializerMixin):
     trip_id = db.Column(db.Integer, db.ForeignKey("trips.id"), nullable=False)
 
     # Add relationship
+    client = db.relationship("Client", back_populates="client_trips")
+    trip = db.relationship("Trip", back_populates="client_trips")
 
     # Add serialization rules
+    serialize_rules = ("-client.client_trips", "-trip.client_trips")
 
     # Add validation
 
