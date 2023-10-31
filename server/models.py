@@ -13,8 +13,9 @@ class Client(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
-    dob = db.Column(db.Date)
-    sex = db.Column(db.String)
+    dob = db.Column(db.Date, nullable=False)
+    sex = db.Column(db.String, nullable=False)
+    waiver = db.Column(db.Boolean, default=False)
     username = db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
 
@@ -71,6 +72,7 @@ class ClientTrip(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     start_date = db.Column(db.Date, nullable=False)
+    paid = db.Column(db.Boolean, default=False)
 
     client_id = db.Column(db.Integer, db.ForeignKey("clients.id"), nullable=False)
     trip_id = db.Column(db.Integer, db.ForeignKey("trips.id"), nullable=False)
