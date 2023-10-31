@@ -1,6 +1,7 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
+from datetime import datetime
 
 from config import db, bcrypt
 
@@ -20,6 +21,8 @@ class Client(db.Model, SerializerMixin):
     # Add relationship
     client_trips = db.relationship("ClientTrip", back_populates="client")
     trips = association_proxy("client_trips", "trip")
+
+    reviews = db.relationship("Review", back_populates="client")
 
     # Add serialization rules
     serialize_rules = ("-_password_hash", "-client_trips", "-trips")
@@ -83,3 +86,23 @@ class ClientTrip(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f"<Client Trip {self.id} Starts: {self.start_date} Ends: {self.end_date} Client ID {self.client_id} Trip ID {self.trip_id}>"
+
+
+class Review(db.Model, SerializerMixin):
+    __tablename__ = "reviews"
+
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.Date, default=datetime.today, nullable=False)
+    comment = db.Column(db.String, nullable=False)
+
+    client_id = db.Column(db.Integer, db.ForeignKey("clients.id"), nullable=False)
+
+    # Add relationship
+    client = db.relationship("Client", back_populates="reviews")
+
+    # Add serialization rules
+
+    # Add validation
+
+    def __repr__(self):
+        return f"<By Client {self.client_id} | {self.comment} | Left on: {self.date}>"
