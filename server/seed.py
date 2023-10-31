@@ -7,7 +7,7 @@ from datetime import date
 
 # Local imports
 from app import app
-from models import db, Client, Trip, ClientTrip
+from models import db, Client, Trip, ClientTrip, Review
 
 
 def create_clients():
@@ -142,12 +142,54 @@ def create_client_trips():
     return client_trips
 
 
+def create_reviews():
+    reviews = []
+
+    review1 = Review(
+        date=date(2023, 7, 24),
+        comment="Wow! Lumpy did not disappoint!  It was everything I imagined and more!  Flaring cracks and stunning views!",
+        client_id=5,
+    )
+    reviews.append(review1)
+
+    review2 = Review(
+        date=date(2023, 7, 30),
+        comment="I am rendered speechless by the serenity of climbing in Glacier Gorge. The stars overnight were unmatchable. After an incredible climb, we dipped into an alpine lake. The trip was rounded out by a bull elk lounging in the marsh above Mills Lake.",
+        client_id=2,
+    )
+    reviews.append(review2)
+
+    review3 = Review(
+        date=date(2023, 8, 4),
+        comment="I had such an incredible time with my guide in Glacier Gorge, I came back for another trip. This time I brought my partner and we climbed the North Face of Longs Peak. Without the overnight, my legs turned to jello after a long day, but it was completely worth it.",
+        client_id=2,
+    )
+    reviews.append(review3)
+
+    review4 = Review(
+        date=date(2023, 8, 4),
+        comment="My partner and I ventured up the North Face of Longs Peak with a skilled mountain guide. We felt safe and secure the entire way. What an accomplishment to summit the only 14er in Rocky Mountain National Park!",
+        client_id=1,
+    )
+    reviews.append(review4)
+
+    review5 = Review(
+        date=date(2023, 9, 3),
+        comment="Climbing the Diamond on Longs Peak has been a lifetime dream of mine. At my age, I wasn't sure it would happen. After a warm-up with the same guide earlier this summer, I knew we could give this a go. My guide was incredibly patient and adept in the terrain. I felt safe, accomplished, and exhausted at the end of two long days.  Thank you!!!",
+        client_id=4,
+    )
+    reviews.append(review5)
+
+    return reviews
+
+
 if __name__ == "__main__":
     with app.app_context():
         print("Clearing db...")
         Client.query.delete()
         Trip.query.delete()
         ClientTrip.query.delete()
+        Review.query.delete()
 
         print("Seeding clients...")
         clients = create_clients()
@@ -162,6 +204,11 @@ if __name__ == "__main__":
         print("Seeding client_trips...")
         client_trips = create_client_trips()
         db.session.add_all(client_trips)
+        db.session.commit()
+
+        print("Seeding reviews...")
+        reviews = create_reviews()
+        db.session.add_all(reviews)
         db.session.commit()
 
         print("Done seeding!")

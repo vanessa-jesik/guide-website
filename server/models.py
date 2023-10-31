@@ -18,14 +18,14 @@ class Client(db.Model, SerializerMixin):
     username = db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
 
-    # Add relationship
+    # Add relationships
     client_trips = db.relationship("ClientTrip", back_populates="client")
     trips = association_proxy("client_trips", "trip")
 
     reviews = db.relationship("Review", back_populates="client")
 
     # Add serialization rules
-    serialize_rules = ("-_password_hash", "-client_trips", "-trips")
+    serialize_rules = ("-_password_hash", "-client_trips", "-trips", "-reviews")
 
     # Password
     @hybrid_property
@@ -40,7 +40,7 @@ class Client(db.Model, SerializerMixin):
     def authenticate(self, password):
         return bcrypt.check_password_hash(self._password_hash, password.encode("utf-8"))
 
-    # Add validation
+    # Add validations
 
     def __repr__(self):
         return f"<Client {self.first_name} {self.last_name} | DOB {self.dob} | {self.sex} | Username {self.username}>"
@@ -53,14 +53,14 @@ class Trip(db.Model, SerializerMixin):
     name = db.Column(db.String, nullable=False)
     length = db.Column(db.Float, nullable=False)
 
-    # Add relationship
+    # Add relationships
     client_trips = db.relationship("ClientTrip", back_populates="trip")
     clients = association_proxy("client_trips", "client")
 
     # Add serialization rules
     serialize_rules = ("-client_trips", "-clients")
 
-    # Add validation
+    # Add validations
 
     def __repr__(self):
         return f"<Trip: {self.name} | Length: {self.length}>"
@@ -75,14 +75,14 @@ class ClientTrip(db.Model, SerializerMixin):
     client_id = db.Column(db.Integer, db.ForeignKey("clients.id"), nullable=False)
     trip_id = db.Column(db.Integer, db.ForeignKey("trips.id"), nullable=False)
 
-    # Add relationship
+    # Add relationships
     client = db.relationship("Client", back_populates="client_trips")
     trip = db.relationship("Trip", back_populates="client_trips")
 
     # Add serialization rules
     serialize_rules = ("-client.client_trips", "-trip.client_trips")
 
-    # Add validation
+    # Add validations
 
     def __repr__(self):
         return f"<Client Trip {self.id} Starts: {self.start_date} Ends: {self.end_date} Client ID {self.client_id} Trip ID {self.trip_id}>"
@@ -97,12 +97,13 @@ class Review(db.Model, SerializerMixin):
 
     client_id = db.Column(db.Integer, db.ForeignKey("clients.id"), nullable=False)
 
-    # Add relationship
+    # Add relationships
     client = db.relationship("Client", back_populates="reviews")
 
     # Add serialization rules
+    serialize_rules = ("-client",)
 
-    # Add validation
+    # Add validations
 
     def __repr__(self):
         return f"<By Client {self.client_id} | {self.comment} | Left on: {self.date}>"
