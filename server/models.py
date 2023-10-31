@@ -68,7 +68,6 @@ class ClientTrip(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     start_date = db.Column(db.Date, nullable=False)
-    end_date = db.Column(db.Date, nullable=False)
 
     client_id = db.Column(db.Integer, db.ForeignKey("clients.id"), nullable=False)
     trip_id = db.Column(db.Integer, db.ForeignKey("trips.id"), nullable=False)
