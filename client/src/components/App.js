@@ -1,8 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./Navbar.js";
+import Home from "./Home.js";
+import About from "./About.js";
+import Trips from "./Trips.js";
 
 function App() {
-  return <h1>Project Client</h1>;
+  return (
+    <div>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/trips" element={<Trips />} />
+      </Routes>
+    </div>
+  );
 }
 
 export default App;

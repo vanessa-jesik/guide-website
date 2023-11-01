@@ -355,3 +355,7 @@ Happy coding!
 - [Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/)
 - [Python Circular Imports - StackAbuse](https://stackabuse.com/python-circular-imports/)
 - [Flask-CORS](https://flask-cors.readthedocs.io/en/latest/)
+
+## Acknowledgements
+
+- [Browser Icon](https://www.flaticon.com/free-icon/mountains_3175239?term=mountain&page=1&position=34&origin=tag&related_id=3175239)
