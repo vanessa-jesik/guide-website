@@ -1,7 +1,8 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
-from datetime import datetime
+from sqlalchemy.orm import validates
+from datetime import date, datetime
 
 from config import db, bcrypt
 
@@ -11,10 +12,11 @@ class Client(db.Model, SerializerMixin):
     __tablename__ = "clients"
 
     id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String, nullable=False)
-    last_name = db.Column(db.String, nullable=False)
+    given_name = db.Column(db.String, nullable=False)
+    family_name = db.Column(db.String, nullable=False)
+    full_name = db.Column(db.String, nullable=False)
     dob = db.Column(db.Date, nullable=False)
-    sex = db.Column(db.String, nullable=False)
+    notes = db.Column(db.String)
     waiver = db.Column(db.Boolean, default=False)
     username = db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
@@ -35,13 +37,85 @@ class Client(db.Model, SerializerMixin):
 
     @password_hash.setter
     def password_hash(self, password):
+        if len(password) < 10:
+            raise ValueError("Password must be at least 10 characters")
         password_hash = bcrypt.generate_password_hash(password.encode("utf-8"))
         self._password_hash = password_hash.decode("utf-8")
 
     def authenticate(self, password):
+        if not password:
+            return False
         return bcrypt.check_password_hash(self._password_hash, password.encode("utf-8"))
 
     # Add validations
+    @validates("given_name")
+    def validate_given_name(self, key, given_name):
+        if not given_name:
+            raise ValueError("Given name is required")
+        if not isinstance(given_name, str):
+            raise ValueError("Given name must be a string")
+        if len(given_name) > 35:
+            raise ValueError("Given name must be 35 characters or fewer")
+        return given_name
+
+    @validates("family_name")
+    def validate_family_name(self, key, family_name):
+        if not family_name:
+            raise ValueError("Family name is required")
+        if not isinstance(family_name, str):
+            raise ValueError("Family name must be a string")
+        if len(family_name) > 35:
+            raise ValueError("Family name must be 35 characters or fewer")
+        return family_name
+
+    @validates("full_name")
+    def validate_full_name(self, key, full_name):
+        if not full_name:
+            raise ValueError("Full name is required")
+        if not isinstance(full_name, str):
+            raise ValueError("Full name must be a string")
+        if len(full_name) > 70:
+            raise ValueError("Full name must be 70 characters or fewer")
+        return full_name
+
+    @validates("dob")
+    def validate_dob(self, key, dob):
+        if not dob:
+            raise ValueError("Date of birth is required")
+        if not isinstance(dob, date):
+            raise ValueError("Date of birth must be a date object")
+        if dob >= date.today():
+            raise ValueError("Date of birth must be before today")
+        return dob
+
+    @validates("notes")
+    def validate_notes(self, key, notes):
+        if not isinstance(notes, str):
+            raise ValueError("Notes must be a string")
+        if len(notes) > 500:
+            raise ValueError("Notes must be 500 characters or fewer")
+        return notes
+
+    @validates("waiver")
+    def validate_waiver(self, key, waiver):
+        if not waiver:
+            raise ValueError("Waiver value required")
+        if not isinstance(waiver, bool):
+            raise ValueError("Waiver must be a boolean value - False or True")
+        return waiver
+
+    @validates("username")
+    def validate_username(self, key, username):
+        if not username:
+            raise ValueError("Username is required")
+        if 5 > len(username) > 75:
+            raise ValueError("Username must be between 5 and 75 characters inclusive")
+        existing_username = Client.query.filter(Client.username == username).first()
+        if existing_username and existing_username != self:
+            raise ValueError(
+                "Username is already taken - please choose a unique username"
+            )
+        return username
 
     def __repr__(self):
         return f"<Client {self.first_name} {self.last_name} | DOB {self.dob} | {self.sex} | Username {self.username}>"
@@ -51,7 +125,7 @@ class Trip(db.Model, SerializerMixin):
     __tablename__ = "trips"
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
+    name = db.Column(db.String, unique=True, nullable=False)
     length = db.Column(db.Float, nullable=False)
 
     # Add relationships
