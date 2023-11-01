@@ -240,6 +240,27 @@ class Review(db.Model, SerializerMixin):
     serialize_rules = ("-client",)
 
     # Add validations
+    @validates("date")
+    def validate_date(self, key, value):
+        if not value:
+            raise ValueError("Date is required")
+        if not isinstance(value, date):
+            raise ValueError("Date must be a date object")
+        # Review date should be today but seed data is created in past
+        # if value != date.today():
+        #     raise ValueError("Date must be today")
+        return value
+
+    @validates("client_id")
+    def validate_client_id(self, key, client_id):
+        if not client_id:
+            raise ValueError("Client ID is required")
+        if not isinstance(client_id, int):
+            raise ValueError("Client ID must be an integer")
+        client = Client.query.filter(Client.id == client_id).first()
+        if not client:
+            raise ValueError("Client ID must be valid ID from database")
+        return client_id
 
     def __repr__(self):
         return f"<By Client {self.client_id} | {self.comment} | Left on: {self.date}>"
