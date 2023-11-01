@@ -179,9 +179,49 @@ class ClientTrip(db.Model, SerializerMixin):
     serialize_rules = ("-client.client_trips", "-trip.client_trips")
 
     # Add validations
+    @validates("start_date")
+    def validate_start_date(self, key, start_date):
+        if not start_date:
+            raise ValueError("Start date is required")
+        if not isinstance(start_date, date):
+            raise ValueError("Start date must be a date object")
+        # Start date after today is important validation but seed data is created in past
+        # if start_date <= date.today():
+        #     raise ValueError("Start date must be after today")
+        return start_date
+
+    @validates("paid")
+    def validate_paid(self, key, paid):
+        if not paid:
+            raise ValueError("Paid value required")
+        if not isinstance(paid, bool):
+            raise ValueError("Paid must be a boolean value - False or True")
+        return paid
+
+    @validates("client_id")
+    def validate_client_id(self, key, client_id):
+        if not client_id:
+            raise ValueError("Client ID is required")
+        if not isinstance(client_id, int):
+            raise ValueError("Client ID must be an integer")
+        client = Client.query.filter(Client.id == client_id).first()
+        if not client:
+            raise ValueError("Client ID must be valid ID from database")
+        return client_id
+
+    @validates("trip_id")
+    def validate_trip_id(self, key, trip_id):
+        if not trip_id:
+            raise ValueError("Trip ID is required")
+        if not isinstance(trip_id, int):
+            raise ValueError("Trip ID must be an integer")
+        trip = Trip.query.filter(Trip.id == trip_id).first()
+        if not trip:
+            raise ValueError("Trip ID must be valid ID from database")
+        return trip_id
 
     def __repr__(self):
-        return f"<Client Trip {self.id} Starts: {self.start_date} Ends: {self.end_date} Client ID {self.client_id} Trip ID {self.trip_id}>"
+        return f"<Client Trip {self.id} Starts: {self.start_date} | Client ID {self.client_id} | Trip ID {self.trip_id}>"
 
 
 class Review(db.Model, SerializerMixin):
