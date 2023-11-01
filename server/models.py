@@ -32,13 +32,15 @@ class Client(db.Model, SerializerMixin):
 
     # Password
     @hybrid_property
-    def password_hash(self):
+    def password(self):
         raise AttributeError("Password hashes may not be viewed.")
 
-    @password_hash.setter
-    def password_hash(self, password):
+    @password.setter
+    def password(self, password):
         if len(password) < 10:
             raise ValueError("Password must be at least 10 characters")
+        if len(password) > 50:
+            raise ValueError("Password may not be more than 50 characters")
         password_hash = bcrypt.generate_password_hash(password.encode("utf-8"))
         self._password_hash = password_hash.decode("utf-8")
 
@@ -55,7 +57,7 @@ class Client(db.Model, SerializerMixin):
         if not isinstance(given_name, str):
             raise ValueError("Given name must be a string")
         if len(given_name) > 35:
-            raise ValueError("Given name must be 35 characters or fewer")
+            raise ValueError("Given name must be 35 or fewer characters")
         return given_name
 
     @validates("family_name")
@@ -65,7 +67,7 @@ class Client(db.Model, SerializerMixin):
         if not isinstance(family_name, str):
             raise ValueError("Family name must be a string")
         if len(family_name) > 35:
-            raise ValueError("Family name must be 35 characters or fewer")
+            raise ValueError("Family name must be 35 or fewer characters")
         return family_name
 
     @validates("full_name")
@@ -75,7 +77,7 @@ class Client(db.Model, SerializerMixin):
         if not isinstance(full_name, str):
             raise ValueError("Full name must be a string")
         if len(full_name) > 70:
-            raise ValueError("Full name must be 70 characters or fewer")
+            raise ValueError("Full name must be 70 or fewer characters")
         return full_name
 
     @validates("dob")
@@ -93,7 +95,7 @@ class Client(db.Model, SerializerMixin):
         if not isinstance(notes, str):
             raise ValueError("Notes must be a string")
         if len(notes) > 500:
-            raise ValueError("Notes must be 500 characters or fewer")
+            raise ValueError("Notes must be 500 or fewer characters")
         return notes
 
     @validates("waiver")
@@ -141,7 +143,7 @@ class Trip(db.Model, SerializerMixin):
         if not name:
             raise ValueError("Trip name is required")
         if len(name) > 40:
-            raise ValueError("Trip name must be 40 characters or fewer")
+            raise ValueError("Trip name must be 40 or fewer characters")
         existing_name = Trip.query.filter(Trip.name == name).first()
         if existing_name and existing_name != self:
             raise ValueError(
@@ -250,6 +252,16 @@ class Review(db.Model, SerializerMixin):
         # if value != date.today():
         #     raise ValueError("Date must be today")
         return value
+
+    @validates("comment")
+    def validate_comment(self, key, comment):
+        if not comment:
+            raise ValueError("Comment is required")
+        if not isinstance(comment, str):
+            raise ValueError("Comment must be a string")
+        if len(comment) > 1000:
+            raise ValueError("Comments must be 1000 or fewer characters")
+        return comment
 
     @validates("client_id")
     def validate_client_id(self, key, client_id):

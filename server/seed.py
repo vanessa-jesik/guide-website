@@ -21,7 +21,7 @@ def create_clients():
         notes="Asthma - will carry inhaler",
         username="wadeblankenship",
     )
-    client1.password_hash = "wadeblankenshippassword"
+    client1.password = "wadeblankenshippassword"
     clients.append(client1)
 
     client2 = Client(
@@ -31,7 +31,7 @@ def create_clients():
         dob=date(1992, 1, 29),
         username="cleomahoney",
     )
-    client2.password_hash = "cleomahoneypassword"
+    client2.password = "cleomahoneypassword"
     clients.append(client2)
 
     client3 = Client(
@@ -41,7 +41,7 @@ def create_clients():
         dob=date(1973, 3, 12),
         username="toddroberts",
     )
-    client3.password_hash = "toddrobertspassword"
+    client3.password = "toddrobertspassword"
     clients.append(client3)
 
     client4 = Client(
@@ -52,7 +52,7 @@ def create_clients():
         notes="Knee replacement in 2020 - well healed but must move intentionally",
         username="deloresvelez",
     )
-    client4.password_hash = "deloresvelezpassword"
+    client4.password = "deloresvelezpassword"
     clients.append(client4)
 
     client5 = Client(
@@ -62,7 +62,7 @@ def create_clients():
         dob=date(2001, 7, 26),
         username="newtonbeasley",
     )
-    client5.password_hash = "newtonbeasleypassword"
+    client5.password = "newtonbeasleypassword"
     clients.append(client5)
 
     client6 = Client(
@@ -72,7 +72,7 @@ def create_clients():
         dob=date(1984, 8, 17),
         username="wangxiu",
     )
-    client6.password_hash = "wangxiupassword"
+    client6.password = "wangxiupassword"
     clients.append(client6)
 
     return clients
