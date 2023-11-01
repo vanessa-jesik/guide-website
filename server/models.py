@@ -118,7 +118,7 @@ class Client(db.Model, SerializerMixin):
         return username
 
     def __repr__(self):
-        return f"<Client {self.first_name} {self.last_name} | DOB {self.dob} | {self.sex} | Username {self.username}>"
+        return f"<Client {self.full_name} | DOB {self.dob} | Username {self.username}>"
 
 
 class Trip(db.Model, SerializerMixin):
@@ -136,6 +136,26 @@ class Trip(db.Model, SerializerMixin):
     serialize_rules = ("-client_trips", "-clients")
 
     # Add validations
+    @validates("name")
+    def validate_name(self, key, name):
+        if not name:
+            raise ValueError("Trip name is required")
+        if len(name) > 40:
+            raise ValueError("Trip name must be 40 characters or fewer")
+        existing_name = Trip.query.filter(Trip.name == name).first()
+        if existing_name and existing_name != self:
+            raise ValueError(
+                "Trip name is already taken - please provide a unique name"
+            )
+        return name
+
+    @validates("length")
+    def validate_length(self, key, length):
+        if not length:
+            raise ValueError("Trip length is required")
+        if not isinstance(length, float):
+            raise ValueError("Trip length must be a float")
+        return length
 
     def __repr__(self):
         return f"<Trip: {self.name} | Length: {self.length}>"
