@@ -10,7 +10,7 @@ function CreateAccount() {
     dob: "",
     notes: "",
     username: "",
-    password_hash: "",
+    password: "",
   };
 
   const validationSchema = yup.object().shape({
@@ -33,7 +33,7 @@ function CreateAccount() {
       .min(5, "Username must be at least 5 characters")
       .max(75, "Username may not be more than 70 characters")
       .required("Username is required"),
-    password_hash: yup
+    password: yup
       .string()
       .min(10, "Password must be at least 10 characters")
       .max(50, "Password may not be more than 50 characters")
@@ -69,32 +69,81 @@ function CreateAccount() {
       <h1>Create Account</h1>
       <form onSubmit={formik.handleSubmit}>
         <div>
-          <label htmlFor="given_name">Given Name:</label>
+          <label htmlFor="given_name">Given name:</label>
           <br />
+          <input
+            id="given_name"
+            name="given_name"
+            onChange={formik.handleChange}
+            value={formik.values.given_name}
+          />
+          <p>{formik.errors.given_name}</p>
         </div>
         <div>
-          <label htmlFor="family_name">Family Name or Surname:</label>
+          <label htmlFor="family_name">Family name or Surname:</label>
           <br />
+          <input
+            id="family_name"
+            name="family_name"
+            onChange={formik.handleChange}
+            value={formik.values.family_name}
+          />
+          <p>{formik.errors.family_name}</p>
         </div>
         <div>
-          <label htmlFor="full_name">Full Name:</label>
+          <label htmlFor="full_name">Full name:</label>
           <br />
+          <input
+            id="full_name"
+            name="full_name"
+            onChange={formik.handleChange}
+            value={formik.values.full_name}
+          />
+          <p>{formik.errors.full_name}</p>
         </div>
         <div>
           <label htmlFor="dob">Date of Birth:</label>
           <br />
+          <input
+            id="dob"
+            name="dob"
+            onChange={formik.handleChange}
+            value={formik.values.dob}
+          />
+          <p>{formik.errors.dob}</p>
         </div>
         <div>
           <label htmlFor="notes">Optional notes for the guide:</label>
           <br />
+          <input
+            id="notes"
+            name="notes"
+            onChange={formik.handleChange}
+            value={formik.values.notes}
+          />
+          <p>{formik.errors.notes}</p>
         </div>
         <div>
           <label htmlFor="username">Username:</label>
           <br />
+          <input
+            id="username"
+            name="username"
+            onChange={formik.handleChange}
+            value={formik.values.username}
+          />
+          <p>{formik.errors.username}</p>
         </div>
         <div>
-          <label htmlFor="password_hash">Password:</label>
+          <label htmlFor="password">Password:</label>
           <br />
+          <input
+            id="password"
+            name="password"
+            onChange={formik.handleChange}
+            value={formik.values.password}
+          />
+          <p>{formik.errors.password}</p>
         </div>
         <div>
           <button type="submit">SUBMIT</button>

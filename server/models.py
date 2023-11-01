@@ -33,7 +33,7 @@ class Client(db.Model, SerializerMixin):
     # Password
     @hybrid_property
     def password(self):
-        raise AttributeError("Password hashes may not be viewed.")
+        raise AttributeError("Passwords may not be viewed.")
 
     @password.setter
     def password(self, password):
