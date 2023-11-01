@@ -1,8 +1,8 @@
 """create tables
 
-Revision ID: c8c7e00f03cb
+Revision ID: 79c9d8402423
 Revises: 
-Create Date: 2023-11-01 15:55:53.962696
+Create Date: 2023-11-01 17:04:29.324188
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'c8c7e00f03cb'
+revision = '79c9d8402423'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,7 +24,6 @@ def upgrade():
     sa.Column('family_name', sa.String(), nullable=False),
     sa.Column('full_name', sa.String(), nullable=False),
     sa.Column('dob', sa.Date(), nullable=False),
-    sa.Column('notes', sa.String(), nullable=True),
     sa.Column('waiver', sa.Boolean(), nullable=True),
     sa.Column('username', sa.String(), nullable=False),
     sa.Column('_password_hash', sa.String(), nullable=False),
@@ -41,6 +40,7 @@ def upgrade():
     op.create_table('client_trips',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('start_date', sa.Date(), nullable=False),
+    sa.Column('notes', sa.String(), nullable=True),
     sa.Column('paid', sa.Boolean(), nullable=True),
     sa.Column('client_id', sa.Integer(), nullable=False),
     sa.Column('trip_id', sa.Integer(), nullable=False),

@@ -18,7 +18,6 @@ def create_clients():
         family_name="Blankenship",
         full_name="Wade Blankenship",
         dob=date(1985, 10, 30),
-        notes="Asthma - will carry inhaler",
         username="wadeblankenship",
     )
     client1.password = "wadeblankenshippassword"
@@ -49,7 +48,6 @@ def create_clients():
         family_name="Velez",
         full_name="Delores Velez",
         dob=date(1968, 11, 4),
-        notes="Knee replacement in 2020 - well healed but must move intentionally",
         username="deloresvelez",
     )
     client4.password = "deloresvelezpassword"
@@ -117,7 +115,12 @@ def create_client_trips():
     client_trip1 = ClientTrip(start_date=date(2023, 7, 14), client_id=3, trip_id=2)
     client_trips.append(client_trip1)
 
-    client_trip2 = ClientTrip(start_date=date(2023, 7, 14), client_id=4, trip_id=2)
+    client_trip2 = ClientTrip(
+        start_date=date(2023, 7, 14),
+        notes="Knee replacement in 2020 - well healed but must move intentionally",
+        client_id=4,
+        trip_id=2,
+    )
     client_trips.append(client_trip2)
 
     client_trip3 = ClientTrip(start_date=date(2023, 7, 22), client_id=5, trip_id=4)
@@ -126,7 +129,12 @@ def create_client_trips():
     client_trip4 = ClientTrip(start_date=date(2023, 7, 27), client_id=2, trip_id=7)
     client_trips.append(client_trip4)
 
-    client_trip5 = ClientTrip(start_date=date(2023, 8, 3), client_id=1, trip_id=5)
+    client_trip5 = ClientTrip(
+        start_date=date(2023, 8, 3),
+        notes="Wade has asthma - will carry inhaler",
+        client_id=1,
+        trip_id=5,
+    )
     client_trips.append(client_trip5)
 
     client_trip6 = ClientTrip(start_date=date(2023, 8, 3), client_id=2, trip_id=5)
@@ -135,7 +143,12 @@ def create_client_trips():
     client_trip6 = ClientTrip(start_date=date(2023, 8, 19), client_id=6, trip_id=4)
     client_trips.append(client_trip6)
 
-    client_trip6 = ClientTrip(start_date=date(2023, 8, 31), client_id=4, trip_id=9)
+    client_trip6 = ClientTrip(
+        start_date=date(2023, 8, 31),
+        notes="Knee replacement in 2020 - this is a longer walk than what we did in July together, but hopefully my knee will behave",
+        client_id=4,
+        trip_id=9,
+    )
     client_trips.append(client_trip6)
 
     client_trip6 = ClientTrip(start_date=date(2023, 9, 6), client_id=5, trip_id=8)

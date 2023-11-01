@@ -16,7 +16,6 @@ class Client(db.Model, SerializerMixin):
     family_name = db.Column(db.String, nullable=False)
     full_name = db.Column(db.String, nullable=False)
     dob = db.Column(db.Date, nullable=False)
-    notes = db.Column(db.String)
     waiver = db.Column(db.Boolean, default=False)
     username = db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
@@ -90,14 +89,6 @@ class Client(db.Model, SerializerMixin):
             raise ValueError("Date of birth must be before today")
         return dob
 
-    @validates("notes")
-    def validate_notes(self, key, notes):
-        if not isinstance(notes, str):
-            raise ValueError("Notes must be a string")
-        if len(notes) > 500:
-            raise ValueError("Notes must be 500 or fewer characters")
-        return notes
-
     @validates("waiver")
     def validate_waiver(self, key, waiver):
         if not waiver:
@@ -168,6 +159,7 @@ class ClientTrip(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     start_date = db.Column(db.Date, nullable=False)
+    notes = db.Column(db.String)
     paid = db.Column(db.Boolean, default=False)
 
     client_id = db.Column(db.Integer, db.ForeignKey("clients.id"), nullable=False)
@@ -191,6 +183,14 @@ class ClientTrip(db.Model, SerializerMixin):
         # if start_date <= date.today():
         #     raise ValueError("Start date must be after today")
         return start_date
+
+    @validates("notes")
+    def validate_notes(self, key, notes):
+        if not isinstance(notes, str):
+            raise ValueError("Notes must be a string")
+        if len(notes) > 500:
+            raise ValueError("Notes must be 500 or fewer characters")
+        return notes
 
     @validates("paid")
     def validate_paid(self, key, paid):

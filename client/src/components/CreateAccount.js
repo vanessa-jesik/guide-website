@@ -8,7 +8,6 @@ function CreateAccount() {
     family_name: "",
     full_name: "",
     dob: "",
-    notes: "",
     username: "",
     password: "",
   };
@@ -27,7 +26,6 @@ function CreateAccount() {
       .max(70, "Full name must be 70 or fewer characters")
       .required("Full name is required"),
     dob: yup.string().required("Date of birth is required"),
-    notes: yup.string().max(500, "Notes must be 500 or fewer characters"),
     username: yup
       .string()
       .min(5, "Username must be at least 5 characters")
@@ -111,17 +109,6 @@ function CreateAccount() {
             value={formik.values.dob}
           />
           <p>{formik.errors.dob}</p>
-        </div>
-        <div>
-          <label htmlFor="notes">Optional notes for the guide:</label>
-          <br />
-          <input
-            id="notes"
-            name="notes"
-            onChange={formik.handleChange}
-            value={formik.values.notes}
-          />
-          <p>{formik.errors.notes}</p>
         </div>
         <div>
           <label htmlFor="username">Username:</label>
