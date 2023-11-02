@@ -83,6 +83,11 @@ class Client(db.Model, SerializerMixin):
     def validate_dob(self, key, dob):
         if not dob:
             raise ValueError("Date of birth is required")
+        if isinstance(dob, str):
+            try:
+                dob = datetime.strptime(dob, "%Y-%m-%d").date()
+            except ValueError:
+                raise ValueError("Invalid date format - use 'YYYY-MM-DD'")
         if not isinstance(dob, date):
             raise ValueError("Date of birth must be a date object")
         if dob >= date.today():
