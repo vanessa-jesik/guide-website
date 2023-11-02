@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
 function CreateAccount() {
+  const [errors, setErrors] = useState([]);
+
   const initialValues = {
     given_name: "",
     family_name: "",
@@ -48,7 +50,8 @@ function CreateAccount() {
       body: JSON.stringify(values),
     })
       .then(response => {
-        if (response.status === 201) {
+        if (response.status === 409) {
+        } else if (response.status === 201) {
           return response.json();
         } else {
           throw new Error("Failed to create new account");
@@ -66,6 +69,10 @@ function CreateAccount() {
   return (
     <div>
       <h1>Create Account</h1>
+      <h2>
+        Creating an account will log you in where you will be able to sign-up
+        for trips.
+      </h2>
       <form onSubmit={formik.handleSubmit}>
         <div>
           <label htmlFor="given_name">Given name:</label>

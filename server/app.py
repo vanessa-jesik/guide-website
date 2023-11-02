@@ -13,7 +13,13 @@ from config import app, db, api
 # Add your model imports
 from models import Client, Trip, ClientTrip, Review
 
+
 # Views go here!
+@app.before_request
+def check_if_signed_in():
+    open_access = ["create_account", "check_session"]
+    if (request.endpoint) not in open_access and (not session.get("client_id")):
+        return {"error": "401 Unauthorized"}, 401
 
 
 @app.route("/")
@@ -22,6 +28,9 @@ def index():
 
 
 class CreateAccount(Resource):
+    def get(self):
+        return {}, 200
+
     def post(self):
         client_json = request.get_json()
         username = client_json["username"]
@@ -40,8 +49,18 @@ class CreateAccount(Resource):
             db.session.commit()
             session["client_id"] = client.id
             return client.to_dict(), 201
-        except ValueError as e:
-            return {"error": e.__str__()}, 422
+        except ValueError as err:
+            return {"error": err.__str__()}, 422
+
+
+# Why is my to_dict() still acting funny here???
+class CheckSession(Resource):
+    def get(self):
+        client_id = session.get("client_id")
+        if client_id:
+            client = Client.query.filter(Client.id == client_id).first()
+            return client.to_dict(), 200
+        return {}, 401
 
 
 class ClientById(Resource):
@@ -50,7 +69,8 @@ class ClientById(Resource):
         return client.to_dict(), 200
 
 
-api.add_resource(CreateAccount, "/create_account")
+api.add_resource(CreateAccount, "/create_account", endpoint="create_account")
+api.add_resource(CheckSession, "/check_session", endpoint="check_session")
 api.add_resource(ClientById, "/clientbyid/<int:id>")
 
 
