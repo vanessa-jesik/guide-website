@@ -1,8 +1,8 @@
 """create tables
 
-Revision ID: 79c9d8402423
+Revision ID: c80cb82032da
 Revises: 
-Create Date: 2023-11-01 17:04:29.324188
+Create Date: 2023-11-01 17:50:21.835869
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '79c9d8402423'
+revision = 'c80cb82032da'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -44,8 +44,8 @@ def upgrade():
     sa.Column('paid', sa.Boolean(), nullable=True),
     sa.Column('client_id', sa.Integer(), nullable=False),
     sa.Column('trip_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['client_id'], ['clients.id'], ),
-    sa.ForeignKeyConstraint(['trip_id'], ['trips.id'], ),
+    sa.ForeignKeyConstraint(['client_id'], ['clients.id'], name=op.f('fk_client_trips_client_id_clients')),
+    sa.ForeignKeyConstraint(['trip_id'], ['trips.id'], name=op.f('fk_client_trips_trip_id_trips')),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('reviews',
@@ -53,7 +53,7 @@ def upgrade():
     sa.Column('date', sa.Date(), nullable=False),
     sa.Column('comment', sa.String(), nullable=False),
     sa.Column('client_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['client_id'], ['clients.id'], ),
+    sa.ForeignKeyConstraint(['client_id'], ['clients.id'], name=op.f('fk_reviews_client_id_clients')),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
