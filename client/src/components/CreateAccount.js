@@ -61,6 +61,7 @@ function CreateAccount() {
   };
 
   const formik = useFormik({ initialValues, validationSchema, onSubmit });
+  console.log(formik.values);
 
   return (
     <div>
