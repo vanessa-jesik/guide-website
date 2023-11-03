@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { CurrentClientContext } from "./App.js";
 
 function CreateAccount() {
-  const [errors, setErrors] = useState([]);
-
+  const [error, setError] = useState([]);
   const initialValues = {
     given_name: "",
     family_name: "",
@@ -41,6 +41,7 @@ function CreateAccount() {
   });
 
   const onSubmit = values => {
+    setError([]);
     fetch("/create_account", {
       method: "POST",
       headers: {
@@ -48,23 +49,16 @@ function CreateAccount() {
         Accept: "application/json",
       },
       body: JSON.stringify(values),
-    })
-      .then(response => {
-        if (response.status === 409) {
-        } else if (response.status === 201) {
-          return response.json();
-        } else {
-          throw new Error("Failed to create new account");
-        }
-      })
-      .then(newClient => console.log(newClient))
-      .catch(error => {
-        console.error("Error creating new account", error);
-      });
+    }).then(response => {
+      if (!response.ok) {
+        response.json().then(err => setError(err.error));
+      } else {
+        response.json().then(newClient => console.log(newClient));
+      }
+    });
   };
 
   const formik = useFormik({ initialValues, validationSchema, onSubmit });
-  console.log(formik.values);
 
   return (
     <div>
@@ -144,6 +138,7 @@ function CreateAccount() {
           <button type="submit">SUBMIT</button>
         </div>
       </form>
+      {error ? <p>{error}</p> : null}
     </div>
   );
 }

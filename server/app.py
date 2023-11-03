@@ -37,7 +37,7 @@ class CreateAccount(Resource):
         existing_username = Client.query.filter(Client.username == username).first()
         if existing_username:
             return {
-                "message": "Username already exists - please choose unique username"
+                "error": "Username already exists - please choose unique username"
             }, 409
         client = Client()
         try:
@@ -53,12 +53,11 @@ class CreateAccount(Resource):
             return {"error": err.__str__()}, 422
 
 
-# Why is my to_dict() still acting funny here???
 class CheckSession(Resource):
     def get(self):
         client_id = session.get("client_id")
         if client_id:
-            client = Client.query.filter(Client.id == client_id).first()
+            client = db.session.get(Client, client_id)
             return client.to_dict(), 200
         return {}, 401
 

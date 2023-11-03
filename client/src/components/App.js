@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./Navbar.js";
 import Home from "./Home.js";
@@ -8,22 +8,27 @@ import CreateAccount from "./CreateAccount.js";
 import SignIn from "./SignIn.js";
 import SignOut from "./SignOut.js";
 
-const CurrentClientContext = createContext(null);
+export const CurrentClientContext = createContext(null);
 
 function App() {
   const [currentClient, setCurrentClient] = useState(null);
 
   useEffect(() => {
-    fetch("/check_session").then(response => {
-      if (response.ok) {
-        response.json().then(client => setCurrentClient(client));
-      }
-    });
+    fetch("/check_session")
+      .then(response => {
+        if (response.ok) {
+          response.json().then(client => {
+            setCurrentClient(client);
+          });
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }, []);
-  console.log(currentClient);
 
   return (
-    <CurrentClientContext.Provider value={{ currentClient, setCurrentClient }}>
+    <CurrentClientContext.Provider value={currentClient}>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
