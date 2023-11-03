@@ -27,7 +27,14 @@ class Client(db.Model, SerializerMixin):
     reviews = db.relationship("Review", back_populates="client")
 
     # Add serialization rules
-    serialize_rules = ("-_password_hash", "-client_trips", "-trips", "-reviews")
+    serialize_rules = (
+        "-username",
+        "-_password_hash",
+        "-waiver",
+        "-client_trips",
+        "-trips",
+        "-reviews",
+    )
 
     # Password
     @hybrid_property

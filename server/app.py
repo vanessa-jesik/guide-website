@@ -17,7 +17,7 @@ from models import Client, Trip, ClientTrip, Review
 # Views go here!
 @app.before_request
 def check_if_signed_in():
-    open_access = ["create_account", "check_session", "sign_in"]
+    open_access = ["create_account", "check_session", "sign_in", "reviews"]
     if (request.endpoint) not in open_access and (not session.get("client_id")):
         return {"error": "401 Unauthorized"}, 401
 
@@ -28,6 +28,7 @@ def index():
 
 
 class CreateAccount(Resource):
+    # Just to test before_request is working properly
     def get(self):
         return {}, 200
 
@@ -84,6 +85,11 @@ class SignOut(Resource):
         return {}, 200
 
 
+class Reviews(Resource):
+    def get(self):
+        return [review.to_dict(rules=("client",)) for review in Review.query.all()], 200
+
+
 # A view for testing/viewing data format
 class ClientById(Resource):
     def get(self, id):
@@ -95,6 +101,7 @@ api.add_resource(CreateAccount, "/create_account", endpoint="create_account")
 api.add_resource(CheckSession, "/check_session", endpoint="check_session")
 api.add_resource(SignIn, "/sign_in", endpoint="sign_in")
 api.add_resource(SignOut, "/sign_out", endpoint="sign_out")
+api.add_resource(Reviews, "/reviews", endpoint="reviews")
 api.add_resource(ClientById, "/clientbyid/<int:id>")
 
 
