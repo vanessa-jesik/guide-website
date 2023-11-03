@@ -17,7 +17,7 @@ from models import Client, Trip, ClientTrip, Review
 # Views go here!
 @app.before_request
 def check_if_signed_in():
-    open_access = ["create_account", "check_session"]
+    open_access = ["create_account", "check_session", "sign_in"]
     if (request.endpoint) not in open_access and (not session.get("client_id")):
         return {"error": "401 Unauthorized"}, 401
 
@@ -31,6 +31,7 @@ class CreateAccount(Resource):
     def get(self):
         return {}, 200
 
+    # Consider changing bracket notation to .get() to avoid keyError
     def post(self):
         client_json = request.get_json()
         username = client_json["username"]
@@ -62,6 +63,22 @@ class CheckSession(Resource):
         return {}, 401
 
 
+class SignIn(Resource):
+    def post(self):
+        sign_in_json = request.get_json()
+        username = sign_in_json.get("username")
+        password = sign_in_json.get("password")
+        if not username or not password:
+            return {"error": "Username and Password required to sign in"}, 400
+        client = Client.query.filter(Client.username == username).first()
+        if client:
+            if client.authenticate(password):
+                session["client_id"] = client.id
+                return client.to_dict(), 200
+        return {"error": "Username or Password incorrect"}, 401
+
+
+# A view for testing/viewing data format
 class ClientById(Resource):
     def get(self, id):
         client = db.session.get(Client, id)
@@ -70,6 +87,7 @@ class ClientById(Resource):
 
 api.add_resource(CreateAccount, "/create_account", endpoint="create_account")
 api.add_resource(CheckSession, "/check_session", endpoint="check_session")
+api.add_resource(SignIn, "/sign_in", endpoint="sign_in")
 api.add_resource(ClientById, "/clientbyid/<int:id>")
 
 

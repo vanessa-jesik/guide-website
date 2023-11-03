@@ -1,10 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { CurrentClientContext } from "./App.js";
 
 function CreateAccount() {
   const [error, setError] = useState([]);
+
   const initialValues = {
     given_name: "",
     family_name: "",
@@ -54,15 +54,19 @@ function CreateAccount() {
         Accept: "application/json",
       },
       body: JSON.stringify(values),
-    }).then(response => {
-      if (!response.ok) {
-        response.json().then(err => setError(err.error));
-      } else {
-        response.json().then(newClient => {
-          console.log(newClient);
-        });
-      }
-    });
+    })
+      .then(response => {
+        if (!response.ok) {
+          response.json().then(err => setError(err.error));
+        } else {
+          response.json().then(newClient => {
+            console.log(newClient);
+          });
+        }
+      })
+      .catch(error => {
+        console.error("Error creating account:", error);
+      });
   };
 
   const formik = useFormik({ initialValues, validationSchema, onSubmit });
@@ -204,8 +208,8 @@ function CreateAccount() {
             SUBMIT
           </button>
         </div>
+        {error ? <p className="text-shimmer">{error}</p> : null}
       </form>
-      {error ? <p className="text-shimmer">{error}</p> : null}
     </div>
   );
 }
