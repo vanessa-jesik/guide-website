@@ -12,6 +12,7 @@ function Navbar() {
       .then(response => {
         if (response.ok) {
           setCurrentClient(null);
+          navigate("/");
         }
       })
       .catch(error => {
