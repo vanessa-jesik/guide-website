@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -9,7 +9,7 @@ import Trips from "./Trips.js";
 import CreateAccount from "./CreateAccount.js";
 import SignIn from "./SignIn.js";
 
-export const CurrentClientContext = createContext(null);
+export const CurrentClientContext = React.createContext();
 
 function App() {
   const [currentClient, setCurrentClient] = useState(null);
@@ -18,9 +18,7 @@ function App() {
     fetch("/check_session")
       .then(response => {
         if (response.ok) {
-          response.json().then(client => {
-            setCurrentClient(client);
-          });
+          response.json().then(client => setCurrentClient(client));
         }
       })
       .catch(error => {
@@ -29,7 +27,7 @@ function App() {
   }, []);
 
   return (
-    <CurrentClientContext.Provider value={currentClient}>
+    <CurrentClientContext.Provider value={{ currentClient, setCurrentClient }}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Navbar />
         <Routes>

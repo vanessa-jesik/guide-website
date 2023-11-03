@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+// Image import
 function importAll(r) {
   let images = {};
   r.keys().map((item, index) => {
@@ -9,7 +10,7 @@ function importAll(r) {
 }
 
 const images = importAll(
-  require.context("./images", false, /\.(png|jpe?g|svg)$/)
+  require.context("./trips_images", false, /\.(png|jpe?g|svg)$/)
 );
 
 function Trips() {

@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { CurrentClientContext } from "./App.js";
 
 function CreateAccount() {
+  const { currentClient, setCurrentClient } = useContext(CurrentClientContext);
   const [error, setError] = useState([]);
+  const navigate = useNavigate();
 
   const initialValues = {
     given_name: "",
@@ -61,7 +65,8 @@ function CreateAccount() {
           response.json().then(err => setError(err.error));
         } else {
           response.json().then(newClient => {
-            console.log(newClient);
+            setCurrentClient(newClient);
+            navigate("/trips");
           });
         }
       })

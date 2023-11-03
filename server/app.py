@@ -5,6 +5,7 @@
 # Remote library imports
 from flask import request, session
 from flask_restful import Resource
+from sqlalchemy import desc
 
 # Local imports
 from config import app, db, api
@@ -87,7 +88,10 @@ class SignOut(Resource):
 
 class Reviews(Resource):
     def get(self):
-        return [review.to_dict(rules=("client",)) for review in Review.query.all()], 200
+        return [
+            review.to_dict(rules=("client",))
+            for review in Review.query.order_by(desc(Review.date)).all()
+        ], 200
 
 
 class Trips(Resource):

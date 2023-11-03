@@ -1,15 +1,17 @@
 import React, { useContext } from "react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { CurrentClientContext } from "./App.js";
-import { NavLink } from "react-router-dom";
 
 function Navbar() {
-  const currentClient = useContext(CurrentClientContext);
+  const { currentClient, setCurrentClient } = useContext(CurrentClientContext);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   function handleSignOut() {
     fetch("/sign_out", { method: "DELETE" })
       .then(response => {
         if (response.ok) {
-          console.log("need to clear current client");
+          setCurrentClient(null);
         }
       })
       .catch(error => {
@@ -18,29 +20,90 @@ function Navbar() {
   }
 
   return (
-    <div>
-      {currentClient ? (
-        <nav>
-          <NavLink to="/">HOME</NavLink>
-          <NavLink to="/about">ABOUT</NavLink>
-          <NavLink to="/trips">TRIPS</NavLink>
+    <nav className="bg-lapis-dark p-4 flex justify-between items-center">
+      {!currentClient ? (
+        <div className="flex items-center space-x-4">
+          <NavLink
+            to="/"
+            className={`text-alice-light px-3 py-1 hover:underline ${
+              location.pathname === "/" ? "bg-sky" : ""
+            }`}
+          >
+            HOME
+          </NavLink>
+          <NavLink
+            to="/about"
+            className={`text-alice-light px-3 py-1 hover:underline ${
+              location.pathname === "/about" ? "bg-sky" : ""
+            }`}
+          >
+            ABOUT
+          </NavLink>
+          <NavLink
+            to="/trips"
+            className={`text-alice-light px-3 py-1 hover:underline ${
+              location.pathname === "/trips" ? "bg-sky" : ""
+            }`}
+          >
+            TRIPS
+          </NavLink>
+          <NavLink
+            to="/create_account"
+            className={`text-alice-light px-3 py-1 hover:underline ${
+              location.pathname === "/create_account" ? "bg-sky" : ""
+            }`}
+          >
+            CREATE ACCOUNT
+          </NavLink>
+          <NavLink
+            to="/sign_in"
+            className={`text-alice-light px-3 py-1 hover:underline ${
+              location.pathname === "/sign_in" ? "bg-sky" : ""
+            }`}
+          >
+            SIGN IN
+          </NavLink>
+        </div>
+      ) : (
+        <>
+          <div className="flex items-center space-x-4">
+            <NavLink
+              to="/"
+              className={`text-alice-light px-3 py-1 hover:underline ${
+                location.pathname === "/" ? "bg-sky" : ""
+              }`}
+            >
+              HOME
+            </NavLink>
+            <NavLink
+              to="/about"
+              className={`text-alice-light px-3 py-1 hover:underline ${
+                location.pathname === "/about" ? "bg-sky" : ""
+              }`}
+            >
+              ABOUT
+            </NavLink>
+            <NavLink
+              to="/trips"
+              className={`text-alice-light px-3 py-1 hover:underline ${
+                location.pathname === "/trips" ? "bg-sky" : ""
+              }`}
+            >
+              TRIPS
+            </NavLink>
+          </div>
           <button
-            onClick={handleSignOut}
-            className="bg-lapis text-parchment px-4 py-2 mx-4 my-2 border-solid border-2 border-lapis-dark rounded-md hover:bg-hunter"
+            onClick={() => {
+              handleSignOut();
+              navigate("/");
+            }}
+            className="bg-shimmer-dark text-alice-light px-4 py-2 rounded-md hover:border-solid hover:border-2 hover:border-alice-dark"
           >
             SIGN OUT
           </button>
-        </nav>
-      ) : (
-        <nav>
-          <NavLink to="/">HOME</NavLink>
-          <NavLink to="/about">ABOUT</NavLink>
-          <NavLink to="/trips">TRIPS</NavLink>
-          <NavLink to="/create_account">CREATE ACCOUNT</NavLink>
-          <NavLink to="/sign_in">SIGN IN</NavLink>
-        </nav>
+        </>
       )}
-    </div>
+    </nav>
   );
 }
 

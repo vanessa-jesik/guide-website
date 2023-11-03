@@ -1,5 +1,18 @@
 import React, { useEffect, useState } from "react";
 
+// Image import
+function importAll(r) {
+  let images = {};
+  r.keys().map((item, index) => {
+    images[item.replace("./", "")] = r(item);
+  });
+  return images;
+}
+
+const images = importAll(
+  require.context("./home_images", false, /\.(png|jpe?g|svg)$/)
+);
+
 function Home() {
   const [reviews, setReviews] = useState([]);
 
@@ -14,6 +27,18 @@ function Home() {
 
   return (
     <div>
+      <header className="bg-cover bg-center h-40 md:h-60 lg:h-80 relative">
+        <img
+          src={images["ep_panoramic.jpeg"]}
+          alt={"Panoramic view Estes Park, Colorado"}
+          className="w-full h-full absolute inset-0"
+        />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <h1 className="text-4xl font-bold text-center p-8 bg-hunter-dark bg-opacity-50 text-alice-light text-opacity-100">
+            ESTES PARK MOUNTAIN GUIDE
+          </h1>
+        </div>
+      </header>
       {reviews
         ? reviews.map(review => (
             <div key={review.id} className="px-40 py-10">
