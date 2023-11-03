@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 function CreateAccount() {
   const [error, setError] = useState([]);
@@ -135,13 +136,20 @@ function CreateAccount() {
             Date of Birth:
           </label>
           <br />
-          <input
+          <DatePicker
             id="dob"
             name="dob"
-            onChange={formik.handleChange}
+            format="YYYY-MM-DD"
+            onChange={date => {
+              if (date) {
+                formik.setFieldValue("dob", date.toISOString().split("T")[0]);
+              } else {
+                formik.setFieldValue("dob", null);
+              }
+            }}
             onBlur={formik.handleBlur}
             value={formik.values.dob}
-            className="border border-gray-300 p-2 mb-2 w-full rounded-md focus:outline-sky-dark"
+            className="w-1/4"
           />
           <p className="text-shimmer">
             {formik.touched.dob && formik.errors.dob}

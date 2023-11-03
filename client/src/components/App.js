@@ -1,5 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Navbar from "./Navbar.js";
 import Home from "./Home.js";
 import About from "./About.js";
@@ -28,14 +30,16 @@ function App() {
 
   return (
     <CurrentClientContext.Provider value={currentClient}>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/trips" element={<Trips />} />
-        <Route path="/create_account" element={<CreateAccount />} />
-        <Route path="/sign_in" element={<SignIn />} />
-      </Routes>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/trips" element={<Trips />} />
+          <Route path="/create_account" element={<CreateAccount />} />
+          <Route path="/sign_in" element={<SignIn />} />
+        </Routes>
+      </LocalizationProvider>
     </CurrentClientContext.Provider>
   );
 }
