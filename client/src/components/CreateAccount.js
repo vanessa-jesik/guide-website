@@ -12,6 +12,7 @@ function CreateAccount() {
     dob: "",
     username: "",
     password: "",
+    confirm_password: "",
   };
 
   const validationSchema = yup.object().shape({
@@ -38,6 +39,10 @@ function CreateAccount() {
       .min(10, "Password must be at least 10 characters")
       .max(50, "Password may not be more than 50 characters")
       .required("Password is required"),
+    confirm_password: yup
+      .string()
+      .oneOf([yup.ref("password"), null], "Passwords must match")
+      .required("Please confirm your password"),
   });
 
   const onSubmit = values => {
@@ -64,14 +69,16 @@ function CreateAccount() {
 
   return (
     <div>
-      <h1>Create Account</h1>
+      <h1 className="text-xl font-bold px-4 py-2">Create Account</h1>
       <h2>
         Creating an account will log you in where you will be able to sign-up
         for trips.
       </h2>
-      <form onSubmit={formik.handleSubmit}>
-        <div>
-          <label htmlFor="given_name">Given name:</label>
+      <form onSubmit={formik.handleSubmit} className="mx-4 mb-28">
+        <div className="m-2">
+          <label htmlFor="given_name" className="font-semibold">
+            Given Name:
+          </label>
           <br />
           <input
             id="given_name"
@@ -79,13 +86,16 @@ function CreateAccount() {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.given_name}
+            className="border border-gray-300 p-2 mb-2 w-full rounded-md focus:outline-sky-dark"
           />
           <p className="text-shimmer">
             {formik.touched.given_name && formik.errors.given_name}
           </p>
         </div>
-        <div>
-          <label htmlFor="family_name">Family name or Surname:</label>
+        <div className="m-2">
+          <label htmlFor="family_name" className="font-semibold">
+            Family Name or Surname:
+          </label>
           <br />
           <input
             id="family_name"
@@ -93,13 +103,16 @@ function CreateAccount() {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.family_name}
+            className="border border-gray-300 p-2 mb-2 w-full rounded-md focus:outline-sky-dark"
           />
           <p className="text-shimmer">
             {formik.touched.family_name && formik.errors.family_name}
           </p>
         </div>
-        <div>
-          <label htmlFor="full_name">Full name:</label>
+        <div className="m-2">
+          <label htmlFor="full_name" className="font-semibold">
+            Full Name:
+          </label>
           <br />
           <input
             id="full_name"
@@ -107,13 +120,16 @@ function CreateAccount() {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.full_name}
+            className="border border-gray-300 p-2 mb-2 w-full rounded-md focus:outline-sky-dark"
           />
           <p className="text-shimmer">
             {formik.touched.full_name && formik.errors.full_name}
           </p>
         </div>
-        <div>
-          <label htmlFor="dob">Date of Birth:</label>
+        <div className="m-2">
+          <label htmlFor="dob" className="font-semibold">
+            Date of Birth:
+          </label>
           <br />
           <input
             id="dob"
@@ -121,13 +137,16 @@ function CreateAccount() {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.dob}
+            className="border border-gray-300 p-2 mb-2 w-full rounded-md focus:outline-sky-dark"
           />
           <p className="text-shimmer">
             {formik.touched.dob && formik.errors.dob}
           </p>
         </div>
-        <div>
-          <label htmlFor="username">Username:</label>
+        <div className="m-2">
+          <label htmlFor="username" className="font-semibold">
+            Username:
+          </label>
           <br />
           <input
             id="username"
@@ -135,27 +154,55 @@ function CreateAccount() {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.username}
+            className="border border-gray-300 p-2 mb-2 w-full rounded-md focus:outline-sky-dark"
           />
           <p className="text-shimmer">
             {formik.touched.username && formik.errors.username}
           </p>
         </div>
-        <div>
-          <label htmlFor="password">Password:</label>
+        <div className="m-2">
+          <label htmlFor="password" className="font-semibold">
+            Password:
+          </label>
           <br />
           <input
             id="password"
             name="password"
+            type="password"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.password}
+            className="border border-gray-300 p-2 mb-2 w-full rounded-md focus:outline-sky-dark"
           />
           <p className="text-shimmer">
             {formik.touched.password && formik.errors.password}
           </p>
         </div>
+        <div className="m-2">
+          <label htmlFor="confirm_password" className="font-semibold">
+            Confirm Password:
+          </label>
+          <br />
+          <input
+            id="confirm_password"
+            name="confirm_password"
+            type="password"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.confirm_password}
+            className="border border-gray-300 p-2 mb-2 w-full rounded-md focus:outline-sky-dark"
+          />
+          <p className="text-shimmer">
+            {formik.touched.confirm_password && formik.errors.confirm_password}
+          </p>
+        </div>
         <div>
-          <button type="submit">SUBMIT</button>
+          <button
+            type="submit"
+            className="bg-lapis text-parchment px-4 py-2 mx-4 my-2 border-solid border-2 border-lapis-dark rounded-md hover:bg-hunter"
+          >
+            SUBMIT
+          </button>
         </div>
       </form>
       {error ? <p className="text-shimmer">{error}</p> : null}
