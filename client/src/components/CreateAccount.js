@@ -53,7 +53,9 @@ function CreateAccount() {
       if (!response.ok) {
         response.json().then(err => setError(err.error));
       } else {
-        response.json().then(newClient => console.log(newClient));
+        response.json().then(newClient => {
+          console.log(newClient);
+        });
       }
     });
   };
@@ -75,9 +77,12 @@ function CreateAccount() {
             id="given_name"
             name="given_name"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             value={formik.values.given_name}
           />
-          <p>{formik.errors.given_name}</p>
+          <p className="text-shimmer">
+            {formik.touched.given_name && formik.errors.given_name}
+          </p>
         </div>
         <div>
           <label htmlFor="family_name">Family name or Surname:</label>
@@ -86,9 +91,12 @@ function CreateAccount() {
             id="family_name"
             name="family_name"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             value={formik.values.family_name}
           />
-          <p>{formik.errors.family_name}</p>
+          <p className="text-shimmer">
+            {formik.touched.family_name && formik.errors.family_name}
+          </p>
         </div>
         <div>
           <label htmlFor="full_name">Full name:</label>
@@ -97,9 +105,12 @@ function CreateAccount() {
             id="full_name"
             name="full_name"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             value={formik.values.full_name}
           />
-          <p>{formik.errors.full_name}</p>
+          <p className="text-shimmer">
+            {formik.touched.full_name && formik.errors.full_name}
+          </p>
         </div>
         <div>
           <label htmlFor="dob">Date of Birth:</label>
@@ -108,9 +119,12 @@ function CreateAccount() {
             id="dob"
             name="dob"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             value={formik.values.dob}
           />
-          <p>{formik.errors.dob}</p>
+          <p className="text-shimmer">
+            {formik.touched.dob && formik.errors.dob}
+          </p>
         </div>
         <div>
           <label htmlFor="username">Username:</label>
@@ -119,9 +133,12 @@ function CreateAccount() {
             id="username"
             name="username"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             value={formik.values.username}
           />
-          <p>{formik.errors.username}</p>
+          <p className="text-shimmer">
+            {formik.touched.username && formik.errors.username}
+          </p>
         </div>
         <div>
           <label htmlFor="password">Password:</label>
@@ -130,15 +147,18 @@ function CreateAccount() {
             id="password"
             name="password"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             value={formik.values.password}
           />
-          <p>{formik.errors.password}</p>
+          <p className="text-shimmer">
+            {formik.touched.password && formik.errors.password}
+          </p>
         </div>
         <div>
           <button type="submit">SUBMIT</button>
         </div>
       </form>
-      {error ? <p>{error}</p> : null}
+      {error ? <p className="text-shimmer">{error}</p> : null}
     </div>
   );
 }
