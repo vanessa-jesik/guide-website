@@ -78,6 +78,12 @@ class SignIn(Resource):
         return {"error": "Username or Password incorrect"}, 401
 
 
+class SignOut(Resource):
+    def delete(self):
+        session["client_id"] = None
+        return {}, 200
+
+
 # A view for testing/viewing data format
 class ClientById(Resource):
     def get(self, id):
@@ -88,6 +94,7 @@ class ClientById(Resource):
 api.add_resource(CreateAccount, "/create_account", endpoint="create_account")
 api.add_resource(CheckSession, "/check_session", endpoint="check_session")
 api.add_resource(SignIn, "/sign_in", endpoint="sign_in")
+api.add_resource(SignOut, "/sign_out", endpoint="sign_out")
 api.add_resource(ClientById, "/clientbyid/<int:id>")
 
 

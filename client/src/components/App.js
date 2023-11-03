@@ -6,7 +6,6 @@ import About from "./About.js";
 import Trips from "./Trips.js";
 import CreateAccount from "./CreateAccount.js";
 import SignIn from "./SignIn.js";
-import SignOut from "./SignOut.js";
 
 export const CurrentClientContext = createContext(null);
 
@@ -36,7 +35,6 @@ function App() {
         <Route path="/trips" element={<Trips />} />
         <Route path="/create_account" element={<CreateAccount />} />
         <Route path="/sign_in" element={<SignIn />} />
-        <Route path="/sign_out" element={<SignOut />} />
       </Routes>
     </CurrentClientContext.Provider>
   );
