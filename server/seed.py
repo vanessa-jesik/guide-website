@@ -7,7 +7,24 @@ from datetime import date
 
 # Local imports
 from app import app
+from os import environ
 from models import db, Admin, Client, Trip, ClientTrip, Review
+
+
+def create_admins():
+    admins = []
+
+    admin1 = Admin(full_name="Vanessa Jesik")
+    admin1.username = environ.get("admin1username")
+    admin1.password = environ.get("admin1password")
+    admins.append(admin1)
+
+    admin2 = Admin(full_name="Buster Jesik")
+    admin2.username = environ.get("admin2username")
+    admin2.password = environ.get("admin2password")
+    admins.append(admin2)
+
+    return admins
 
 
 def create_clients():
@@ -201,10 +218,16 @@ def create_reviews():
 if __name__ == "__main__":
     with app.app_context():
         print("Clearing db...")
+        Admin.query.delete()
         Client.query.delete()
         Trip.query.delete()
         ClientTrip.query.delete()
         Review.query.delete()
+
+        print("Seeding admins...")
+        admins = create_admins()
+        db.session.add_all(admins)
+        db.session.commit()
 
         print("Seeding clients...")
         clients = create_clients()

@@ -29,8 +29,8 @@ class Admin(db.Model, SerializerMixin):
 
     @password.setter
     def password(self, password):
-        if len(password) < 10:
-            raise ValueError("Password must be at least 10 characters")
+        if len(password) < 8:
+            raise ValueError("Password must be at least 8 characters")
         if len(password) > 50:
             raise ValueError("Password may not be more than 50 characters")
         password_hash = bcrypt.generate_password_hash(password.encode("utf-8"))
@@ -109,8 +109,8 @@ class Client(db.Model, SerializerMixin):
 
     @password.setter
     def password(self, password):
-        if len(password) < 10:
-            raise ValueError("Password must be at least 10 characters")
+        if len(password) < 8:
+            raise ValueError("Password must be at least 8 characters")
         if len(password) > 50:
             raise ValueError("Password may not be more than 50 characters")
         password_hash = bcrypt.generate_password_hash(password.encode("utf-8"))

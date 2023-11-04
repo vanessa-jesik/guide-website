@@ -41,7 +41,7 @@ function CreateAccount() {
       .required("Username is required"),
     password: yup
       .string()
-      .min(10, "Password must be at least 10 characters")
+      .min(8, "Password must be at least 8 characters")
       .max(50, "Password may not be more than 50 characters")
       .required("Password is required"),
     confirm_password: yup
