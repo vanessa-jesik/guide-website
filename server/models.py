@@ -8,6 +8,72 @@ from config import db, bcrypt
 
 
 # Models go here!
+class Admin(db.Model, SerializerMixin):
+    __tablename__ = "admins"
+
+    id = db.Column(db.Integer, primary_key=True)
+    full_name = db.Column(db.String, nullable=False)
+    username = db.Column(db.String, unique=True, nullable=False)
+    _password_hash = db.Column(db.String, nullable=False)
+
+    # Add serialization rules
+    serialize_rules = (
+        "-username",
+        "-_password_hash",
+    )
+
+    # Password
+    @hybrid_property
+    def password(self):
+        raise AttributeError("Passwords may not be viewed.")
+
+    @password.setter
+    def password(self, password):
+        if len(password) < 10:
+            raise ValueError("Password must be at least 10 characters")
+        if len(password) > 50:
+            raise ValueError("Password may not be more than 50 characters")
+        password_hash = bcrypt.generate_password_hash(password.encode("utf-8"))
+        self._password_hash = password_hash.decode("utf-8")
+
+    def authenticate(self, password):
+        if not password:
+            return False
+        return bcrypt.check_password_hash(self._password_hash, password.encode("utf-8"))
+
+    # Add validations
+    @validates("full_name")
+    def validate_full_name(self, key, full_name):
+        if not full_name:
+            raise ValueError("Full name is required")
+        if not isinstance(full_name, str):
+            raise ValueError("Full name must be a string")
+        if len(full_name) > 70:
+            raise ValueError("Full name must be 70 or fewer characters")
+        return full_name
+
+    @validates("username")
+    def validate_username(self, key, username):
+        if not username:
+            raise ValueError("Username is required")
+        if 5 > len(username) > 75:
+            raise ValueError("Username must be between 5 and 75 characters inclusive")
+        existing_admin = Admin.query.filter(Admin.username == username).first()
+        if existing_admin and existing_admin != self:
+            raise ValueError(
+                "Username is already taken - please choose a unique username"
+            )
+        existing_client = Client.query.filter(Client.username == username).first()
+        if existing_client and existing_client != self:
+            raise ValueError(
+                "Username is already taken - please choose a unique username"
+            )
+        return username
+
+    def __repr__(self):
+        return f"<Admin {self.id} | {self.full_name}>"
+
+
 class Client(db.Model, SerializerMixin):
     __tablename__ = "clients"
 
@@ -115,15 +181,20 @@ class Client(db.Model, SerializerMixin):
             raise ValueError("Username is required")
         if 5 > len(username) > 75:
             raise ValueError("Username must be between 5 and 75 characters inclusive")
-        existing_username = Client.query.filter(Client.username == username).first()
-        if existing_username and existing_username != self:
+        existing_admin = Admin.query.filter(Admin.username == username).first()
+        if existing_admin and existing_admin != self:
+            raise ValueError(
+                "Username is already taken - please choose a unique username"
+            )
+        existing_client = Client.query.filter(Client.username == username).first()
+        if existing_client and existing_client != self:
             raise ValueError(
                 "Username is already taken - please choose a unique username"
             )
         return username
 
     def __repr__(self):
-        return f"<Client {self.full_name} | DOB {self.dob} | Username {self.username}>"
+        return f"<Client {self.id} | {self.full_name} | DOB {self.dob}>"
 
 
 class Trip(db.Model, SerializerMixin):
@@ -132,6 +203,7 @@ class Trip(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
     length = db.Column(db.Float, nullable=False)
+    description = db.Column(db.String)
 
     # Add relationships
     client_trips = db.relationship("ClientTrip", back_populates="trip")
@@ -145,6 +217,8 @@ class Trip(db.Model, SerializerMixin):
     def validate_name(self, key, name):
         if not name:
             raise ValueError("Trip name is required")
+        if not isinstance(name, str):
+            raise ValueError("Trip name must be a string")
         if len(name) > 40:
             raise ValueError("Trip name must be 40 or fewer characters")
         existing_name = Trip.query.filter(Trip.name == name).first()
@@ -162,8 +236,16 @@ class Trip(db.Model, SerializerMixin):
             raise ValueError("Trip length must be a float")
         return length
 
+    @validates("description")
+    def validate_description(self, key, description):
+        if not isinstance(description, str):
+            raise ValueError("Trip description must be a string")
+        if len(description) > 500:
+            raise ValueError("Trip description must 500 or fewer characters")
+        return description
+
     def __repr__(self):
-        return f"<Trip: {self.name} | Length: {self.length}>"
+        return f"<Trip {self.id}: {self.name} | Length: {self.length} day(s)>"
 
 
 class ClientTrip(db.Model, SerializerMixin):
@@ -287,4 +369,6 @@ class Review(db.Model, SerializerMixin):
         return client_id
 
     def __repr__(self):
-        return f"<By Client {self.client_id} | {self.comment} | Left on: {self.date}>"
+        return (
+            f"<By Client {self.client_id} | {self.comment} | Written on: {self.date}>"
+        )

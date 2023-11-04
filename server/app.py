@@ -12,7 +12,7 @@ from config import app, db, api
 
 
 # Add your model imports
-from models import Client, Trip, ClientTrip, Review
+from models import Admin, Client, Trip, ClientTrip, Review
 
 
 # Views go here!
@@ -21,11 +21,6 @@ def check_if_signed_in():
     open_access = ["create_account", "check_session", "sign_in", "reviews", "trips"]
     if (request.endpoint) not in open_access and (not session.get("client_id")):
         return {"error": "401 Unauthorized"}, 401
-
-
-@app.route("/")
-def index():
-    return "<h1>Project Server</h1>"
 
 
 class CreateAccount(Resource):

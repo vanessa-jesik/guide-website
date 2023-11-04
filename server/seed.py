@@ -7,7 +7,7 @@ from datetime import date
 
 # Local imports
 from app import app
-from models import db, Client, Trip, ClientTrip, Review
+from models import db, Admin, Client, Trip, ClientTrip, Review
 
 
 def create_clients():
