@@ -8,17 +8,18 @@ import About from "./About.js";
 import Trips from "./Trips.js";
 import CreateAccount from "./CreateAccount.js";
 import SignIn from "./SignIn.js";
+import AdminPage from "./AdminPage.js";
 
-export const CurrentClientContext = React.createContext();
+export const CurrentUserContext = React.createContext();
 
 function App() {
-  const [currentClient, setCurrentClient] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     fetch("/check_session")
       .then(response => {
         if (response.ok) {
-          response.json().then(client => setCurrentClient(client));
+          response.json().then(user => setCurrentUser(user));
         }
       })
       .catch(error => {
@@ -27,18 +28,21 @@ function App() {
   }, []);
 
   return (
-    <CurrentClientContext.Provider value={{ currentClient, setCurrentClient }}>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/trips" element={<Trips />} />
-          <Route path="/create_account" element={<CreateAccount />} />
-          <Route path="/sign_in" element={<SignIn />} />
-        </Routes>
-      </LocalizationProvider>
-    </CurrentClientContext.Provider>
+    <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
+      <div className="selection:bg-gray-200">
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/trips" element={<Trips />} />
+            <Route path="/create_account" element={<CreateAccount />} />
+            <Route path="/sign_in" element={<SignIn />} />
+            <Route path="/admin" element={<AdminPage />} />
+          </Routes>
+        </LocalizationProvider>
+      </div>
+    </CurrentUserContext.Provider>
   );
 }
 

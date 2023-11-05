@@ -18,6 +18,8 @@ from models import Admin, Client, Trip, ClientTrip, Review
 # Views go here!
 @app.before_request
 def check_if_signed_in():
+    # if session.get("admin_id"):
+    #     return {}, 100
     open_access = ["create_account", "check_session", "sign_in", "reviews", "trips"]
     if (request.endpoint) not in open_access and (not session.get("client_id")):
         return {"error": "401 Unauthorized"}, 401
@@ -28,12 +30,12 @@ class CreateAccount(Resource):
     def get(self):
         return {}, 200
 
-    # Consider changing bracket notation to .get() to avoid keyError
     def post(self):
         client_json = request.get_json()
-        username = client_json["username"]
-        existing_username = Client.query.filter(Client.username == username).first()
-        if existing_username:
+        username = client_json.get("username")
+        existing_admin = Admin.query.filter(Admin.username == username).first()
+        existing_client = Client.query.filter(Client.username == username).first()
+        if existing_admin or existing_client:
             return {
                 "error": "Username already exists - please choose unique username"
             }, 409
@@ -42,7 +44,7 @@ class CreateAccount(Resource):
             for key in client_json:
                 if hasattr(client, key):
                     setattr(client, key, client_json[key])
-            client.password = client_json["password"]
+            client.password = client_json.get("password")
             db.session.add(client)
             db.session.commit()
             session["client_id"] = client.id
@@ -57,6 +59,10 @@ class CheckSession(Resource):
         if client_id:
             client = db.session.get(Client, client_id)
             return client.to_dict(), 200
+        admin_id = session.get("admin_id")
+        if admin_id:
+            admin = db.session.get(Admin, admin_id)
+            return admin.to_dict(), 200
         return {}, 401
 
 
@@ -72,12 +78,18 @@ class SignIn(Resource):
             if client.authenticate(password):
                 session["client_id"] = client.id
                 return client.to_dict(), 200
+        admin = Admin.query.filter(Admin.username == username).first()
+        if admin:
+            if admin.authenticate(password):
+                session["admin_id"] = admin.id
+                return admin.to_dict(), 200
         return {"error": "Username or Password incorrect"}, 401
 
 
 class SignOut(Resource):
     def delete(self):
         session["client_id"] = None
+        session["admin_id"] = None
         return {}, 200
 
 

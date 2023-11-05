@@ -13,6 +13,7 @@ class Admin(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     full_name = db.Column(db.String, nullable=False)
+    user_type = db.Column(db.String, default="admin")
     username = db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
 
@@ -52,6 +53,16 @@ class Admin(db.Model, SerializerMixin):
             raise ValueError("Full name must be 70 or fewer characters")
         return full_name
 
+    @validates("user_type")
+    def validate_user_type(self, key, user_type):
+        if not user_type:
+            raise ValueError("User type is required")
+        if not isinstance(user_type, str):
+            raise ValueError("User type must be a string")
+        if user_type != "admin":
+            raise ValueError("User type must be admin for an Admin instance")
+        return user_type
+
     @validates("username")
     def validate_username(self, key, username):
         if not username:
@@ -83,6 +94,7 @@ class Client(db.Model, SerializerMixin):
     full_name = db.Column(db.String, nullable=False)
     dob = db.Column(db.Date, nullable=False)
     waiver = db.Column(db.Boolean, default=False)
+    user_type = db.Column(db.String, default="client")
     username = db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
 
@@ -174,6 +186,16 @@ class Client(db.Model, SerializerMixin):
         if not isinstance(waiver, bool):
             raise ValueError("Waiver must be a boolean value - False or True")
         return waiver
+
+    @validates("user_type")
+    def validate_user_type(self, key, user_type):
+        if not user_type:
+            raise ValueError("User type is required")
+        if not isinstance(user_type, str):
+            raise ValueError("User type must be a string")
+        if user_type != "client":
+            raise ValueError("User type must be client for a Client instance")
+        return user_type
 
     @validates("username")
     def validate_username(self, key, username):

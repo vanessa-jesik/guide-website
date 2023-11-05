@@ -2,10 +2,10 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { CurrentClientContext } from "./App.js";
+import { CurrentUserContext } from "./App.js";
 
 function SignIn() {
-  const { currentClient, setCurrentClient } = useContext(CurrentClientContext);
+  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   const [error, setError] = useState([]);
   const navigate = useNavigate();
 
@@ -33,8 +33,10 @@ function SignIn() {
         if (!response.ok) {
           response.json().then(err => setError(err.error));
         } else {
-          response.json().then(client => setCurrentClient(client));
-          navigate("/trips");
+          response.json().then(user => {
+            setCurrentUser(user);
+            navigate("/trips");
+          });
         }
       })
       .catch(error => {

@@ -358,4 +358,4 @@ Happy coding!
 
 ## Acknowledgements
 
-- [Browser Icon](https://www.flaticon.com/free-icon/mountains_3175239?term=mountain&page=1&position=34&origin=tag&related_id=3175239)
+- [Browser Icon](https://www.flaticon.com/free-icon/mountain_9140319?term=mountain&page=1&position=3&origin=tag&related_id=9140319)
