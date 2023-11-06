@@ -1,15 +1,17 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import AdminNav from "./AdminNav.js";
 import AdminTrips from "./AdminTrips.js";
 import AdminReviews from "./AdminReviews.js";
 import AdminClients from "./AdminClients.js";
 
 function AdminPage() {
+  const location = useLocation();
+
   return (
     <>
       <AdminNav />
-      <p>Admin Page</p>
+      {location.pathname === "/admin" ? <p>Welcome Admin!</p> : null}
       <Routes>
         <Route path="/admin_trips" element={<AdminTrips />} />
         <Route path="/admin_reviews" element={<AdminReviews />} />

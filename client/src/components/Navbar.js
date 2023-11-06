@@ -119,7 +119,7 @@ function Navbar() {
               <NavLink
                 to="/admin"
                 className={`text-alice-light px-3 py-1 hover:underline ${
-                  location.pathname === "/admin" ? "bg-sky" : ""
+                  location.pathname.startsWith("/admin") ? "bg-sky" : ""
                 }`}
               >
                 ADMIN

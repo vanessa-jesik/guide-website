@@ -99,6 +99,16 @@ class Trips(Resource):
         return [trip.to_dict() for trip in Trip.query.all()], 200
 
 
+class TripById(Resource):
+    def delete(self, id):
+        trip = db.session.get(Trip, id)
+        if trip:
+            db.session.delete(trip)
+            db.session.commit()
+            return {}, 204
+        return {"error": "Trip not found"}, 404
+
+
 class Reviews(Resource):
     def get(self):
         return [
@@ -129,8 +139,9 @@ api.add_resource(CheckSession, "/check_session", endpoint="check_session")
 api.add_resource(SignIn, "/sign_in", endpoint="sign_in")
 api.add_resource(SignOut, "/sign_out", endpoint="sign_out")
 api.add_resource(Trips, "/trips", endpoint="trips")
+api.add_resource(TripById, "/trips/<int:id>", endpoint="tripbyid")
 api.add_resource(Reviews, "/reviews", endpoint="reviews")
-api.add_resource(ReviewById, "/reviews/<int:id>")
+api.add_resource(ReviewById, "/reviews/<int:id>", endpoint="reviewbyid")
 api.add_resource(ClientById, "/clientbyid/<int:id>")
 
 
