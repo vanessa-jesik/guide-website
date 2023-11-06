@@ -44,9 +44,10 @@ function AdminTrips() {
       .then(response => {
         if (!response.ok) {
           response.json().then(err => setError(err.error));
+        } else {
+          const updatedTrips = trips.filter(trip => trip.id !== id);
+          setTrips(updatedTrips);
         }
-        const updatedTrips = trips.filter(trip => trip.id !== id);
-        setTrips(updatedTrips);
       })
       .catch(error => {
         console.error("Error deleting trip:", error);
@@ -55,7 +56,9 @@ function AdminTrips() {
 
   return (
     <>
-      {error ? <p>Error editing or deleting trip: {error}</p> : null}
+      {error ? (
+        <p className="text-shimmer">Error editing or deleting trip: {error}</p>
+      ) : null}
       {trips ? (
         <table>
           <thead>

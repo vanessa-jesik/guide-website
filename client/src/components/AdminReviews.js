@@ -20,9 +20,10 @@ function AdminReviews() {
       .then(response => {
         if (!response.ok) {
           response.json().then(err => setError(err.error));
+        } else {
+          const updatedReviews = reviews.filter(review => review.id !== id);
+          setReviews(updatedReviews);
         }
-        const updatedReviews = reviews.filter(review => review.id !== id);
-        setReviews(updatedReviews);
       })
       .catch(error => {
         console.error("Error deleting review:", error);
@@ -31,7 +32,9 @@ function AdminReviews() {
 
   return (
     <>
-      {error ? <p>Error deleting review: {error}</p> : null}
+      {error ? (
+        <p className="text-shimmer">Error deleting review: {error}</p>
+      ) : null}
       <ul className="max-w-6xl flex flex-col divide-y divide-gray-200">
         {reviews ? (
           reviews.map(review => (
