@@ -40,7 +40,7 @@ function App() {
             <Route path="/sign_in" element={<SignIn />} />
             {/* Routes only available to admin*/}
             {currentUser?.user_type === "admin" ? (
-              <Route path="/admin" element={<AdminPage />} />
+              <Route path="/admin/*" element={<AdminPage />} />
             ) : null}
           </Routes>
         </LocalizationProvider>
