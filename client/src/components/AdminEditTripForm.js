@@ -22,7 +22,7 @@ function AdminEditTripForm({ trip, handleEditTrip, setError }) {
   });
 
   const onSubmit = values => {
-    setError([]);
+    setError(null);
     fetch(`/trips/${id}`, {
       method: "PATCH",
       headers: {
@@ -34,9 +34,8 @@ function AdminEditTripForm({ trip, handleEditTrip, setError }) {
       .then(response => {
         if (!response.ok) {
           response.json().then(err => setError(err.error));
-        } else {
-          response.json().then(updatedTrip => console.log(updatedTrip));
         }
+        response.json().then(updatedTrip => console.log(updatedTrip));
       })
       .catch(error => console.error("Error updating trip:", error));
   };
@@ -75,29 +74,45 @@ function AdminEditTripForm({ trip, handleEditTrip, setError }) {
           </div>
           <form onSubmit={formik.handleSubmit}>
             <div className="p-4 overflow-y-auto">
-              <p>Edit form keey working on form from here</p>
               <div className="m-2">
-                <label htmlFor="username" className="font-semibold">
-                  Username:
+                <label htmlFor="name" className="font-semibold">
+                  Trip name:
                 </label>
                 <br />
                 <input
-                  id="username"
-                  name="username"
+                  id="name"
+                  name="name"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.username}
+                  value={formik.values.name}
                   className="border border-gray-300 p-2 mb-2 w-full rounded-md focus:outline-sky-dark"
                 />
                 <p className="text-shimmer">
-                  {formik.touched.username && formik.errors.username}
+                  {formik.touched.name && formik.errors.name}
+                </p>
+              </div>
+              <div className="m-2">
+                <label htmlFor="description" className="font-semibold">
+                  Description:
+                </label>
+                <br />
+                <input
+                  id="description"
+                  name="description"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.description}
+                  className="border border-gray-300 p-2 mb-2 w-full rounded-md focus:outline-sky-dark"
+                />
+                <p className="text-shimmer">
+                  {formik.touched.description && formik.errors.description}
                 </p>
               </div>
             </div>
             <div className="flex justify-end items-center gap-x-2 py-3 px-4 border-t">
               <button
                 type="submit"
-                className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800"
+                className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm"
                 data-hs-overlay={`#edit-trip-modal-${trip.id}`}
               >
                 Confirm Change

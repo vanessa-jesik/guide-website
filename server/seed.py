@@ -100,32 +100,53 @@ def create_clients():
 def create_trips():
     trips = []
 
-    trip1 = Trip(name="Fun at Performance Park", length=0.5)
+    trip1 = Trip(
+        name="Beginner Rock Climbing",
+        description="This outing is perfect for individuals looking to get their start in climbing or for the whole family to get outside together! Half day and full days available.",
+    )
     trips.append(trip1)
 
-    trip2 = Trip(name="Craggin' at Mary's Lake", length=0.5)
+    trip2 = Trip(
+        name="Climb on Iconic Lumpy Ridge",
+        description="Lumpy Ridge has a rich history in the Estes Park climbing community and is full of fun classics! Be a part of that story and enjoy a day looking down on town!",
+    )
     trips.append(trip2)
 
-    trip3 = Trip(name="Thumb and Needle", length=1.0)
+    trip3 = Trip(
+        name="Petit Grepon",
+        description="Climb a spire rising above Sky Pond in Rocky Mountain National Park.  The summit, a pedestal in the sky, will surely be unforgettable.",
+    )
     trips.append(trip3)
 
-    trip4 = Trip(name="Lumpy Ridge Classic", length=1.0)
+    trip4 = Trip(
+        name="Cables Route - North Face of Longs Peak",
+        description="Summit Longs Peak via the Cables Route - a moderate climb overlooking the Boulder Field.",
+    )
     trips.append(trip4)
 
-    trip5 = Trip(name="North Face of Longs Peak", length=1.0)
+    trip5 = Trip(
+        name="The Diamond - East Face of Longs Peak",
+        description="The penultimate climbing object in the Estes Park area. Splitter cracks at 13,000 feet looking out over the Chasm Cirque.",
+    )
     trips.append(trip5)
 
-    trip6 = Trip(name="Spearhead", length=1.0)
+    trip6 = Trip(
+        name="Back Country Skiing",
+        description="Explore the back country with a certified guide! Skip the lift lines and enjoy fields of untracked powder!",
+    )
     trips.append(trip6)
 
-    trip7 = Trip(name="Spearhead with Bivy in Glacier Gorge", length=2.0)
+    trip7 = Trip(
+        name="Winter Ice Climbing",
+        description="Experience the reverie of climbing a frozen waterfall. All abilities welcome!",
+    )
     trips.append(trip7)
 
-    trip8 = Trip(name="Diamond - East Face of Longs Peak", length=1.0)
+    trip8 = Trip(
+        name="Spring Mountaineering",
+        description="April, May, and June are the best months of the year to experience snow climbing in the Colorado Rockies! Outings for beginners and classic mountaineering objects for experienced climbers.",
+    )
     trips.append(trip8)
-
-    trip9 = Trip(name="Diamond with Bivy in Chasm Cirque", length=2.0)
-    trips.append(trip9)
 
     return trips
 
@@ -147,32 +168,32 @@ def create_client_trips():
     client_trip3 = ClientTrip(start_date=date(2023, 7, 22), client_id=5, trip_id=4)
     client_trips.append(client_trip3)
 
-    client_trip4 = ClientTrip(start_date=date(2023, 7, 27), client_id=2, trip_id=7)
+    client_trip4 = ClientTrip(start_date=date(2023, 7, 27), client_id=2, trip_id=3)
     client_trips.append(client_trip4)
 
     client_trip5 = ClientTrip(
         start_date=date(2023, 8, 3),
         notes="Wade has asthma - will carry inhaler",
         client_id=1,
-        trip_id=5,
+        trip_id=4,
     )
     client_trips.append(client_trip5)
 
-    client_trip6 = ClientTrip(start_date=date(2023, 8, 3), client_id=2, trip_id=5)
+    client_trip6 = ClientTrip(start_date=date(2023, 8, 3), client_id=2, trip_id=4)
     client_trips.append(client_trip6)
 
-    client_trip6 = ClientTrip(start_date=date(2023, 8, 19), client_id=6, trip_id=4)
+    client_trip6 = ClientTrip(start_date=date(2023, 8, 19), client_id=6, trip_id=5)
     client_trips.append(client_trip6)
 
     client_trip6 = ClientTrip(
         start_date=date(2023, 8, 31),
         notes="Knee replacement in 2020 - this is a longer walk than what we did in July together, but hopefully my knee will behave",
         client_id=4,
-        trip_id=9,
+        trip_id=4,
     )
     client_trips.append(client_trip6)
 
-    client_trip6 = ClientTrip(start_date=date(2023, 9, 6), client_id=5, trip_id=8)
+    client_trip6 = ClientTrip(start_date=date(2023, 9, 6), client_id=5, trip_id=5)
     client_trips.append(client_trip6)
 
     return client_trips

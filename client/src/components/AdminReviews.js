@@ -2,34 +2,39 @@ import React, { useEffect, useState } from "react";
 import "preline";
 
 function AdminReviews() {
-  const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetch("/reviews")
       .then(response => response.json())
       .then(reviews => setReviews(reviews))
       .catch(error => {
-        console.error(error);
+        console.error("Error retrieving reviews:", error);
       });
   }, []);
 
   function handleDeleteReview(id) {
+    setError(null);
     fetch(`/reviews/${id}`, { method: "DELETE" })
       .then(response => {
-        if (response.ok) {
-          const updatedReviews = reviews.filter(review => review.id !== id);
-          setReviews(updatedReviews);
+        if (!response.ok) {
+          response.json().then(err => setError(err.error));
         }
+        const updatedReviews = reviews.filter(review => review.id !== id);
+        setReviews(updatedReviews);
       })
       .catch(error => {
-        console.error(error);
+        console.error("Error deleting review:", error);
       });
   }
 
   return (
-    <ul className="max-w-6xl flex flex-col divide-y divide-gray-200">
-      {reviews
-        ? reviews.map(review => (
+    <>
+      {error ? <p>Error deleting review: {error}</p> : null}
+      <ul className="max-w-6xl flex flex-col divide-y divide-gray-200">
+        {reviews ? (
+          reviews.map(review => (
             <li
               key={review.id}
               className="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium text-gray-800 "
@@ -80,7 +85,7 @@ function AdminReviews() {
                       <button
                         type="button"
                         onClick={() => handleDeleteReview(review.id)}
-                        className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800"
+                        className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm"
                         data-hs-overlay={`#delete-review-modal-${review.id}`}
                       >
                         Confirm Delete
@@ -91,8 +96,11 @@ function AdminReviews() {
               </div>
             </li>
           ))
-        : null}
-    </ul>
+        ) : (
+          <p>Loading reviews...</p>
+        )}
+      </ul>
+    </>
   );
 }
 

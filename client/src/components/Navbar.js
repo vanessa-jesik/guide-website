@@ -29,7 +29,7 @@ function Navbar() {
         }
       })
       .catch(error => {
-        console.error(error);
+        console.error("Error signing out:", error);
       });
   }
 

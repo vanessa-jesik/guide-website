@@ -14,47 +14,40 @@ const images = importAll(
 );
 
 function Trips() {
-  const [trips, setTrips] = useState([]);
+  const [trips, setTrips] = useState(null);
 
   useEffect(() => {
     fetch("/trips")
       .then(response => response.json())
       .then(trips => setTrips(trips))
       .catch(error => {
-        console.error(error);
+        console.error("Error retrieving trips:", error);
       });
   }, []);
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-      {trips
-        ? trips.map(trip => (
-            <div
-              key={trip.id}
-              className="relative bg-white border shadow-sm rounded-full "
-            >
-              <img
-                className="w-full h-auto rounded-full"
-                src={images["mountains.jpeg"]}
-                alt="Mountain Image"
-              />
-              <div className="absolute top-0 left-0 right-0">
-                <div className="p-4 md:p-5">
-                  <h3 className="text-lg font-bold text-gray-800">
-                    {trip.name}
-                  </h3>
-                  <p className="mt-1 text-black">
-                    {trip.length === 0.5
-                      ? "half day"
-                      : trip.length > 1
-                      ? `${trip.length} days`
-                      : `${trip.length} day`}
-                  </p>
-                </div>
+      {trips ? (
+        trips.map(trip => (
+          <div
+            key={trip.id}
+            className="relative bg-white border shadow-sm rounded-full "
+          >
+            <img
+              className="w-full h-auto rounded-full"
+              src={images["mountains.jpeg"]}
+              alt="Mountain Image"
+            />
+            <div className="absolute top-0 left-0 right-0">
+              <div className="p-4 md:p-5">
+                <h3 className="text-lg font-bold text-gray-800">{trip.name}</h3>
               </div>
             </div>
-          ))
-        : null}
+          </div>
+        ))
+      ) : (
+        <p>Loading trips...</p>
+      )}
     </div>
   );
 }

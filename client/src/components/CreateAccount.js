@@ -221,7 +221,7 @@ function CreateAccount() {
             SUBMIT
           </button>
         </div>
-        {error ? <p className="text-shimmer">{error}</p> : null}
+        <p className="text-shimmer">{error}</p>
       </form>
     </div>
   );

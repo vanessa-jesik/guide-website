@@ -216,8 +216,7 @@ class Trip(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
-    length = db.Column(db.Float, nullable=False)
-    description = db.Column(db.String)
+    description = db.Column(db.String, nullable=False)
 
     # Add relationships
     client_trips = db.relationship("ClientTrip", back_populates="trip")
@@ -242,16 +241,10 @@ class Trip(db.Model, SerializerMixin):
             )
         return name
 
-    @validates("length")
-    def validate_length(self, key, length):
-        if not length:
-            raise ValueError("Trip length is required")
-        if not isinstance(length, float):
-            raise ValueError("Trip length must be a float")
-        return length
-
     @validates("description")
     def validate_description(self, key, description):
+        if not description:
+            raise ValueError("Trip description is required")
         if not isinstance(description, str):
             raise ValueError("Trip description must be a string")
         if len(description) > 500:
