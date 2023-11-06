@@ -98,11 +98,24 @@ class Trips(Resource):
     def get(self):
         return [trip.to_dict() for trip in Trip.query.all()], 200
 
+    def post(self):
+        trip_json = request.get_json()
+        trip = Trip()
+        try:
+            for key in trip_json:
+                if hasattr(trip, key):
+                    setattr(trip, key, trip_json[key])
+            db.session.add(trip)
+            db.session.commit()
+            return trip.to_dict(), 201
+        except ValueError as e:
+            return {"error": e.__str__()}, 422
+
 
 class TripById(Resource):
     def patch(self, id):
-        trip = db.session.get(Trip, id)
         trip_json = request.get_json()
+        trip = db.session.get(Trip, id)
         if trip:
             try:
                 for key in trip_json:

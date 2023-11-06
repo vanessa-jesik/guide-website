@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "preline";
 import AdminEditTripForm from "./AdminEditTripForm.js";
+import AdminCreateTripForm from "./AdminCreateTripForm.js";
 
 // Image import
 function importAll(r) {
@@ -18,6 +19,7 @@ const images = importAll(
 function AdminTrips() {
   const [trips, setTrips] = useState(null);
   const [error, setError] = useState(null);
+  const [showAddTripForm, setShowAddTripForm] = useState(false);
 
   useEffect(() => {
     fetch("/trips")
@@ -52,6 +54,11 @@ function AdminTrips() {
       .catch(error => {
         console.error("Error deleting trip:", error);
       });
+  }
+
+  function handleAddTrip(newTrip) {
+    const updatedTrips = [...trips, newTrip];
+    setTrips(updatedTrips);
   }
 
   return (
@@ -155,6 +162,19 @@ function AdminTrips() {
         </table>
       ) : (
         <p>Loading table of trips...</p>
+      )}
+      {!showAddTripForm ? (
+        <button onClick={() => setShowAddTripForm(true)}>
+          Create New Trip
+        </button>
+      ) : (
+        <>
+          <button onClick={() => setShowAddTripForm(false)}>Close Form</button>
+          <AdminCreateTripForm
+            handleAddTrip={handleAddTrip}
+            setShowAddTripForm={setShowAddTripForm}
+          />
+        </>
       )}
     </>
   );
