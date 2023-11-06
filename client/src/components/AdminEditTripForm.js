@@ -34,8 +34,9 @@ function AdminEditTripForm({ trip, handleEditTrip, setError }) {
       .then(response => {
         if (!response.ok) {
           response.json().then(err => setError(err.error));
+        } else {
+          response.json().then(updatedTrip => handleEditTrip(updatedTrip));
         }
-        response.json().then(updatedTrip => console.log(updatedTrip));
       })
       .catch(error => console.error("Error updating trip:", error));
   };

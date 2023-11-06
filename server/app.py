@@ -100,6 +100,20 @@ class Trips(Resource):
 
 
 class TripById(Resource):
+    def patch(self, id):
+        trip = db.session.get(Trip, id)
+        trip_json = request.get_json()
+        if trip:
+            try:
+                for key in trip_json:
+                    if hasattr(trip, key):
+                        setattr(trip, key, trip_json[key])
+                db.session.commit()
+                return trip.to_dict(), 200
+            except ValueError as e:
+                return {"error": e.__str__()}, 422
+        return {"error": "Trip not found"}, 404
+
     def delete(self, id):
         trip = db.session.get(Trip, id)
         if trip:

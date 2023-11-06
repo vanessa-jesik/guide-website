@@ -28,8 +28,14 @@ function AdminTrips() {
       });
   }, []);
 
-  function handleEditTrip(id) {
-    console.log(id);
+  function handleEditTrip(updatedTrip) {
+    const updatedTrips = trips.map(trip => {
+      if (trip.id === updatedTrip.id) {
+        return updatedTrip;
+      }
+      return trip;
+    });
+    setTrips(updatedTrips);
   }
 
   function handleDeleteTrip(id) {
