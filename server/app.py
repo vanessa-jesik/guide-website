@@ -94,6 +94,11 @@ class SignOut(Resource):
         return {}, 200
 
 
+class Trips(Resource):
+    def get(self):
+        return [trip.to_dict() for trip in Trip.query.all()], 200
+
+
 class Reviews(Resource):
     def get(self):
         return [
@@ -102,9 +107,14 @@ class Reviews(Resource):
         ], 200
 
 
-class Trips(Resource):
-    def get(self):
-        return [trip.to_dict() for trip in Trip.query.all()], 200
+class ReviewById(Resource):
+    def delete(self, id):
+        review = db.session.get(Review, id)
+        if review:
+            db.session.delete(review)
+            db.session.commit()
+            return {}, 204
+        return {"error": "Review not found"}, 404
 
 
 # A view for testing/viewing data format
@@ -118,8 +128,9 @@ api.add_resource(CreateAccount, "/create_account", endpoint="create_account")
 api.add_resource(CheckSession, "/check_session", endpoint="check_session")
 api.add_resource(SignIn, "/sign_in", endpoint="sign_in")
 api.add_resource(SignOut, "/sign_out", endpoint="sign_out")
-api.add_resource(Reviews, "/reviews", endpoint="reviews")
 api.add_resource(Trips, "/trips", endpoint="trips")
+api.add_resource(Reviews, "/reviews", endpoint="reviews")
+api.add_resource(ReviewById, "/reviews/<int:id>")
 api.add_resource(ClientById, "/clientbyid/<int:id>")
 
 
