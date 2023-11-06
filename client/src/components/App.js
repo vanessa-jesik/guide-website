@@ -38,7 +38,10 @@ function App() {
             <Route path="/trips" element={<Trips />} />
             <Route path="/create_account" element={<CreateAccount />} />
             <Route path="/sign_in" element={<SignIn />} />
-            <Route path="/admin" element={<AdminPage />} />
+            {/* Routes only available to admin*/}
+            {currentUser?.user_type === "admin" ? (
+              <Route path="/admin" element={<AdminPage />} />
+            ) : null}
           </Routes>
         </LocalizationProvider>
       </div>

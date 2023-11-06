@@ -36,6 +36,7 @@ function Navbar() {
   return (
     <nav className="bg-lapis-dark p-4 flex justify-between items-center">
       {!currentUser ? (
+        // Open access navbar
         <>
           <div className="flex items-center space-x-4">
             <NavLink
@@ -86,6 +87,7 @@ function Navbar() {
           />
         </>
       ) : (
+        // Signed in user navbar
         <>
           <div className="flex items-center space-x-4">
             <NavLink
@@ -112,6 +114,17 @@ function Navbar() {
             >
               TRIPS
             </NavLink>
+            {currentUser.user_type === "admin" ? (
+              // Signed in admin navbar additions
+              <NavLink
+                to="/admin"
+                className={`text-alice-light px-3 py-1 hover:underline ${
+                  location.pathname === "/admin" ? "bg-sky" : ""
+                }`}
+              >
+                ADMIN
+              </NavLink>
+            ) : null}
           </div>
           <div className="flex items-center justify-between">
             <button

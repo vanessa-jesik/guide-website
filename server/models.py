@@ -71,14 +71,10 @@ class Admin(db.Model, SerializerMixin):
             raise ValueError("Username must be between 5 and 75 characters inclusive")
         existing_admin = Admin.query.filter(Admin.username == username).first()
         if existing_admin and existing_admin != self:
-            raise ValueError(
-                "Username is already taken - please choose a unique username"
-            )
+            raise ValueError("Username already exists - please choose unique username")
         existing_client = Client.query.filter(Client.username == username).first()
         if existing_client and existing_client != self:
-            raise ValueError(
-                "Username is already taken - please choose a unique username"
-            )
+            raise ValueError("Username already exists - please choose unique username")
         return username
 
     def __repr__(self):
@@ -205,14 +201,10 @@ class Client(db.Model, SerializerMixin):
             raise ValueError("Username must be between 5 and 75 characters inclusive")
         existing_admin = Admin.query.filter(Admin.username == username).first()
         if existing_admin and existing_admin != self:
-            raise ValueError(
-                "Username is already taken - please choose a unique username"
-            )
+            raise ValueError("Username already exists - please choose unique username")
         existing_client = Client.query.filter(Client.username == username).first()
         if existing_client and existing_client != self:
-            raise ValueError(
-                "Username is already taken - please choose a unique username"
-            )
+            raise ValueError("Username already exists - please choose unique username")
         return username
 
     def __repr__(self):

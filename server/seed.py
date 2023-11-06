@@ -14,13 +14,17 @@ from models import db, Admin, Client, Trip, ClientTrip, Review
 def create_admins():
     admins = []
 
-    admin1 = Admin(full_name="Vanessa Jesik")
-    admin1.username = environ.get("admin1username")
+    admin1 = Admin(
+        full_name="Vanessa Jesik",
+        username=environ.get("admin1username"),
+    )
     admin1.password = environ.get("admin1password")
     admins.append(admin1)
 
-    admin2 = Admin(full_name="Buster Jesik")
-    admin2.username = environ.get("admin2username")
+    admin2 = Admin(
+        full_name="Buster Jesik",
+        username=environ.get("admin2username"),
+    )
     admin2.password = environ.get("admin2password")
     admins.append(admin2)
 
