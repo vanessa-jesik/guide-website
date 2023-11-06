@@ -340,7 +340,6 @@ class Review(db.Model, SerializerMixin):
     client = db.relationship("Client", back_populates="reviews")
 
     # Add serialization rules
-    serialize_rules = ("-client",)
 
     # Add validations
     @validates("date")

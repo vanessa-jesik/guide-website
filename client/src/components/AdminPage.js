@@ -2,8 +2,9 @@ import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import AdminNav from "./AdminNav.js";
 import AdminTrips from "./AdminTrips.js";
-import AdminReviews from "./AdminReviews.js";
 import AdminClients from "./AdminClients.js";
+import AdminClientTrips from "./AdminClientTrips.js";
+import AdminReviews from "./AdminReviews.js";
 
 function AdminPage() {
   const location = useLocation();
@@ -14,8 +15,9 @@ function AdminPage() {
       {location.pathname === "/admin" ? <p>Welcome Admin!</p> : null}
       <Routes>
         <Route path="/admin_trips" element={<AdminTrips />} />
-        <Route path="/admin_reviews" element={<AdminReviews />} />
         <Route path="/admin_clients" element={<AdminClients />} />
+        <Route path="/admin_client_trips" element={<AdminClientTrips />} />
+        <Route path="/admin_reviews" element={<AdminReviews />} />
       </Routes>
     </>
   );

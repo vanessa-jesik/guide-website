@@ -139,7 +139,7 @@ class TripById(Resource):
 class Reviews(Resource):
     def get(self):
         return [
-            review.to_dict(rules=("client",))
+            review.to_dict()
             for review in Review.query.order_by(desc(Review.date)).all()
         ], 200
 
