@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "preline";
 import AdminEditTripForm from "./AdminEditTripForm.js";
 import AdminCreateTripForm from "./AdminCreateTripForm.js";
 

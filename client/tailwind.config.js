@@ -3,8 +3,10 @@ module.exports = {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/preline/dist/*.js",
     "./node_modules/tw-elements-react/dist/js/**/*.js",
   ],
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
@@ -18,5 +20,8 @@ module.exports = {
       },
     },
   },
-  plugins: [require("preline/plugin", "tw-elements/dist/plugin")],
+  plugins: [
+    require("preline/plugin"),
+    require("tw-elements-react/dist/plugin.cjs"),
+  ],
 };
