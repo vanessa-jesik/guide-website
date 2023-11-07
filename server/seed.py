@@ -39,6 +39,7 @@ def create_clients():
         family_name="Blankenship",
         full_name="Wade Blankenship",
         dob=date(1985, 10, 30),
+        waiver=True,
         username="wadeblankenship",
     )
     client1.password = "wadeblankenshippassword"
@@ -49,6 +50,7 @@ def create_clients():
         family_name="Mahoney",
         full_name="Cleo Mahoney",
         dob=date(1992, 1, 29),
+        waiver=True,
         username="cleomahoney",
     )
     client2.password = "cleomahoneypassword"
@@ -59,6 +61,7 @@ def create_clients():
         family_name="Roberts",
         full_name="Todd Roberts",
         dob=date(1973, 3, 12),
+        waiver=True,
         username="toddroberts",
     )
     client3.password = "toddrobertspassword"
@@ -69,6 +72,7 @@ def create_clients():
         family_name="Velez",
         full_name="Delores Velez",
         dob=date(1968, 11, 4),
+        waiver=True,
         username="deloresvelez",
     )
     client4.password = "deloresvelezpassword"
@@ -79,6 +83,7 @@ def create_clients():
         family_name="Beasley",
         full_name="Newton Beasley",
         dob=date(2001, 7, 26),
+        waiver=True,
         username="newtonbeasley",
     )
     client5.password = "newtonbeasleypassword"
@@ -89,10 +94,31 @@ def create_clients():
         family_name="Wang",
         full_name="Wang Xiu",
         dob=date(1984, 8, 17),
+        waiver=True,
         username="wangxiu",
     )
     client6.password = "wangxiupassword"
     clients.append(client6)
+
+    client7 = Client(
+        given_name="Madhu",
+        family_name="Ermelinde",
+        full_name="Madhu Ermelinde",
+        dob=date(1978, 12, 2),
+        username="madhuermelinde",
+    )
+    client7.password = "madhuermelindepassword"
+    clients.append(client7)
+
+    client8 = Client(
+        given_name="Amanda",
+        family_name="Vincenza",
+        full_name="Amanda Vincenza",
+        dob=date(1989, 3, 30),
+        username="amandavincenza",
+    )
+    client8.password = "amandavincenzapassword"
+    clients.append(client8)
 
     return clients
 
@@ -154,47 +180,78 @@ def create_trips():
 def create_client_trips():
     client_trips = []
 
-    client_trip1 = ClientTrip(start_date=date(2023, 7, 14), client_id=3, trip_id=2)
+    client_trip1 = ClientTrip(
+        start_date=date(2023, 7, 14), paid=True, client_id=3, trip_id=2
+    )
     client_trips.append(client_trip1)
 
     client_trip2 = ClientTrip(
         start_date=date(2023, 7, 14),
         notes="Knee replacement in 2020 - well healed but must move intentionally",
+        paid=True,
         client_id=4,
         trip_id=2,
     )
     client_trips.append(client_trip2)
 
-    client_trip3 = ClientTrip(start_date=date(2023, 7, 22), client_id=5, trip_id=4)
+    client_trip3 = ClientTrip(
+        start_date=date(2023, 7, 22), paid=True, client_id=5, trip_id=4
+    )
     client_trips.append(client_trip3)
 
-    client_trip4 = ClientTrip(start_date=date(2023, 7, 27), client_id=2, trip_id=3)
+    client_trip4 = ClientTrip(
+        start_date=date(2023, 7, 27), paid=True, client_id=2, trip_id=3
+    )
     client_trips.append(client_trip4)
 
     client_trip5 = ClientTrip(
         start_date=date(2023, 8, 3),
         notes="Wade has asthma - will carry inhaler",
+        paid=True,
         client_id=1,
         trip_id=4,
     )
     client_trips.append(client_trip5)
 
-    client_trip6 = ClientTrip(start_date=date(2023, 8, 3), client_id=2, trip_id=4)
-    client_trips.append(client_trip6)
-
-    client_trip6 = ClientTrip(start_date=date(2023, 8, 19), client_id=6, trip_id=5)
-    client_trips.append(client_trip6)
-
     client_trip6 = ClientTrip(
-        start_date=date(2023, 8, 31),
-        notes="Knee replacement in 2020 - this is a longer walk than what we did in July together, but hopefully my knee will behave",
-        client_id=4,
-        trip_id=4,
+        start_date=date(2023, 8, 3), paid=True, client_id=2, trip_id=4
     )
     client_trips.append(client_trip6)
 
-    client_trip6 = ClientTrip(start_date=date(2023, 9, 6), client_id=5, trip_id=5)
-    client_trips.append(client_trip6)
+    client_trip7 = ClientTrip(
+        start_date=date(2023, 8, 19), paid=True, client_id=6, trip_id=5
+    )
+    client_trips.append(client_trip7)
+
+    client_trip8 = ClientTrip(
+        start_date=date(2023, 8, 31),
+        notes="Knee replacement in 2020 - this is a longer walk than what we did in July together, but hopefully my knee will behave",
+        paid=True,
+        client_id=4,
+        trip_id=4,
+    )
+    client_trips.append(client_trip8)
+
+    client_trip9 = ClientTrip(
+        start_date=date(2023, 10, 5), paid=True, client_id=1, trip_id=2
+    )
+    client_trips.append(client_trip9)
+
+    client_trip10 = ClientTrip(
+        start_date=date(2023, 11, 11), paid=True, client_id=4, trip_id=2
+    )
+    client_trips.append(client_trip10)
+
+    client_trip11 = ClientTrip(
+        start_date=date(2023, 12, 31),
+        notes="Really looking forward to ringing in the New Year by doing something brand new!",
+        client_id=8,
+        trip_id=7,
+    )
+    client_trips.append(client_trip11)
+
+    client_trip12 = ClientTrip(start_date=date(2023, 12, 28), client_id=7, trip_id=6)
+    client_trips.append(client_trip12)
 
     return client_trips
 

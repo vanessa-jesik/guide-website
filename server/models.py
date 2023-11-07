@@ -104,7 +104,6 @@ class Client(db.Model, SerializerMixin):
     serialize_rules = (
         "-username",
         "-_password_hash",
-        "-waiver",
         "-client_trips",
         "-trips",
         "-reviews",

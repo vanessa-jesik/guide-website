@@ -13,7 +13,7 @@ function importAll(r) {
 }
 
 const images = importAll(
-  require.context("./admintrips_images", false, /\.(png|jpe?g|svg)$/)
+  require.context("./icons", false, /\.(png|jpe?g|svg)$/)
 );
 
 function AdminTrips() {
@@ -59,6 +59,7 @@ function AdminTrips() {
   function handleAddTrip(newTrip) {
     const updatedTrips = [...trips, newTrip];
     setTrips(updatedTrips);
+    setError(null);
   }
 
   return (

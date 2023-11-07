@@ -10,7 +10,7 @@ function importAll(r) {
 }
 
 const images = importAll(
-  require.context("./trips_images", false, /\.(png|jpe?g|svg)$/)
+  require.context("./trip_images", false, /\.(png|jpe?g|svg)$/)
 );
 
 function Trips() {

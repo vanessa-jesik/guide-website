@@ -136,6 +136,16 @@ class TripById(Resource):
         return {"error": "Trip not found"}, 404
 
 
+class ClientTrips(Resource):
+    def get(self):
+        return [
+            client_trip.to_dict()
+            for client_trip in ClientTrip.query.order_by(
+                desc(ClientTrip.start_date)
+            ).all()
+        ], 200
+
+
 class Reviews(Resource):
     def get(self):
         return [
@@ -167,6 +177,7 @@ api.add_resource(SignIn, "/sign_in", endpoint="sign_in")
 api.add_resource(SignOut, "/sign_out", endpoint="sign_out")
 api.add_resource(Trips, "/trips", endpoint="trips")
 api.add_resource(TripById, "/trips/<int:id>", endpoint="tripbyid")
+api.add_resource(ClientTrips, "/client_trips", endpoint="client_trips")
 api.add_resource(Reviews, "/reviews", endpoint="reviews")
 api.add_resource(ReviewById, "/reviews/<int:id>", endpoint="reviewbyid")
 api.add_resource(ClientById, "/clientbyid/<int:id>")

@@ -12,7 +12,7 @@ function importAll(r) {
 }
 
 const images = importAll(
-  require.context("./navbar_images", false, /\.(png|jpe?g|svg)$/)
+  require.context("./icons", false, /\.(png|jpe?g|svg)$/)
 );
 
 function Navbar() {
