@@ -1,17 +1,5 @@
 import React, { useEffect, useState } from "react";
-
-// Image import
-function importAll(r) {
-  let images = {};
-  r.keys().map((item, index) => {
-    images[item.replace("./", "")] = r(item);
-  });
-  return images;
-}
-
-const images = importAll(
-  require.context("./icons", false, /\.(png|jpe?g|svg)$/)
-);
+import AdminClientTripRow from "./AdminClientTripRow.js";
 
 function AdminClientTrips() {
   const [clientTrips, setClientTrips] = useState(null);
@@ -24,64 +12,20 @@ function AdminClientTrips() {
   }, []);
 
   return clientTrips ? (
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Date</th>
-          <th>Trip</th>
-          <th>Client</th>
-          <th>Waiver</th>
-          <th>Paid</th>
-          <th>Notes</th>
-        </tr>
-      </thead>
-      <tbody>
-        {clientTrips.map(clientTrip => (
-          <tr key={clientTrip.id}>
-            <td>{clientTrip.id}</td>
-            <td>{clientTrip.start_date}</td>
-            <td>{clientTrip.trip.name}</td>
-            <td>
-              {clientTrip.client.full_name}
-              <br />
-              {clientTrip.client.dob}
-            </td>
-            <td>
-              {clientTrip.client.waiver ? (
-                <img
-                  src={images["check-mark.png"]}
-                  alt="check mark icon by flaticon"
-                  className="h-7 mx-4"
-                />
-              ) : (
-                <img
-                  src={images["x.png"]}
-                  alt="x icon by flaticon"
-                  className="h-7 mx-4"
-                />
-              )}
-            </td>
-            <td>
-              {clientTrip.paid ? (
-                <img
-                  src={images["check-mark.png"]}
-                  alt="check mark icon by flaticon"
-                  className="h-7 mx-4"
-                />
-              ) : (
-                <img
-                  src={images["x.png"]}
-                  alt="x icon by flaticon"
-                  className="h-7 mx-4"
-                />
-              )}
-            </td>
-            <td>{clientTrip.notes}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div className="m-10">
+      <div className="flex text-center bg-gray-100">
+        <div className="flex-1 border border-gray-300 p-2">ID</div>
+        <div className="flex-1 border border-gray-300 p-2">Date</div>
+        <div className="flex-1 border border-gray-300 p-2">Trip</div>
+        <div className="flex-1 border border-gray-300 p-2">Client</div>
+        <div className="flex-1 border border-gray-300 p-2">Waiver</div>
+        <div className="flex-1 border border-gray-300 p-2">Paid</div>
+        <div className="flex-1 border border-gray-300 p-2">Notes</div>
+      </div>
+      {clientTrips.map(clientTrip => (
+        <AdminClientTripRow key={clientTrip.id} clientTrip={clientTrip} />
+      ))}
+    </div>
   ) : (
     <p>Loading table of client trips...</p>
   );
