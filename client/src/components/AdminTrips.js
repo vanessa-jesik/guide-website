@@ -68,23 +68,29 @@ function AdminTrips() {
         <p className="text-shimmer">Error editing or deleting trip: {error}</p>
       ) : null}
       {trips ? (
-        <table>
+        <table className="m-10">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Edit Trip</th>
-              <th>Delete Trip</th>
+              <th className="border border-gray-100 w-16 p-4">ID</th>
+              <th className="border border-gray-100 p-4">Name</th>
+              <th className="border border-gray-100 p-4">Description</th>
+              <th className="border border-gray-100 w-32 p-4">Edit Trip</th>
+              <th className="border border-gray-100 w-32 p-4">Delete Trip</th>
             </tr>
           </thead>
           <tbody>
             {trips.map(trip => (
-              <tr key={trip.id}>
-                <td>{trip.id}</td>
-                <td>{trip.name}</td>
-                <td>{trip.description}</td>
-                <td>
+              <tr key={trip.id} className="h-16">
+                <td className="text-center border border-gray-100">
+                  {trip.id}
+                </td>
+                <td className="text-center border border-gray-100 px-2">
+                  {trip.name}
+                </td>
+                <td className="border border-gray-100 p-2">
+                  {trip.description}
+                </td>
+                <td className="border border-gray-100">
                   <button
                     type="button"
                     data-hs-overlay={`#edit-trip-modal-${trip.id}`}
@@ -92,7 +98,7 @@ function AdminTrips() {
                     <img
                       src={images["edit.png"]}
                       alt="edit icon by flaticon"
-                      className="h-7 mx-4"
+                      className="h-7 mx-10"
                     />
                   </button>
                   <AdminEditTripForm
@@ -101,7 +107,7 @@ function AdminTrips() {
                     setError={setError}
                   />
                 </td>
-                <td>
+                <td className="border border-gray-100">
                   <button
                     type="button"
                     data-hs-overlay={`#delete-trip-modal-${trip.id}`}
@@ -109,7 +115,7 @@ function AdminTrips() {
                     <img
                       src={images["delete.png"]}
                       alt="trash can icon by flaticon"
-                      className="h-8 mx-4"
+                      className="h-8 mx-10"
                     />
                   </button>
                   <div
@@ -164,19 +170,33 @@ function AdminTrips() {
       ) : (
         <p>Loading table of trips...</p>
       )}
-      {!showAddTripForm ? (
-        <button onClick={() => setShowAddTripForm(true)}>
-          Create New Trip
-        </button>
-      ) : (
-        <>
-          <button onClick={() => setShowAddTripForm(false)}>Close Form</button>
-          <AdminCreateTripForm
-            handleAddTrip={handleAddTrip}
-            setShowAddTripForm={setShowAddTripForm}
-          />
-        </>
-      )}
+      <div className="flex flex-col mb-20">
+        {!showAddTripForm ? (
+          <div>
+            <button
+              onClick={() => setShowAddTripForm(true)}
+              className="bg-lapis text-parchment px-4 py-2 mx-4 my-2 border-solid border-2 border-lapis-dark rounded-md hover:bg-hunter"
+            >
+              Create New Trip
+            </button>
+          </div>
+        ) : (
+          <>
+            <div>
+              <button
+                onClick={() => setShowAddTripForm(false)}
+                className="bg-lapis text-parchment px-4 py-2 mx-4 my-2 border-solid border-2 border-lapis-dark rounded-md hover:bg-hunter"
+              >
+                Close Form
+              </button>
+            </div>
+            <AdminCreateTripForm
+              handleAddTrip={handleAddTrip}
+              setShowAddTripForm={setShowAddTripForm}
+            />
+          </>
+        )}
+      </div>
     </>
   );
 }

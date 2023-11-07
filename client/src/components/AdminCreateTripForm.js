@@ -49,9 +49,9 @@ function AdminCreateTripForm({ handleAddTrip, setShowAddTripForm }) {
   const formik = useFormik({ initialValues, validationSchema, onSubmit });
 
   return (
-    <div>
+    <div className="border border-gray-300 rounded-md">
       <h1 className="text-xl font-bold px-4 py-2">Enter new trip details!</h1>
-      <form onSubmit={formik.handleSubmit} className="mx-4 mb-28">
+      <form onSubmit={formik.handleSubmit} className="m-4">
         <div className="m-2">
           <label htmlFor="name" className="font-semibold">
             Trip name:
