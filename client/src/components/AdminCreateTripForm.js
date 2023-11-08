@@ -49,7 +49,7 @@ function AdminCreateTripForm({ handleCreateTrip, setShowCreateTripForm }) {
   const formik = useFormik({ initialValues, validationSchema, onSubmit });
 
   return (
-    <div className="w-3/5 border border-gray-300 rounded-md">
+    <div className="w-3/5 border border-gray-300 rounded-md mt-5">
       <h1 className="text-xl font-bold px-4 py-2">Enter new trip details!</h1>
       <form onSubmit={formik.handleSubmit} className="m-4">
         <div className="m-2">
@@ -91,7 +91,7 @@ function AdminCreateTripForm({ handleCreateTrip, setShowCreateTripForm }) {
             type="submit"
             className="bg-lapis text-parchment px-4 py-2 mx-4 my-2 border-solid border-2 border-lapis-dark rounded-md hover:bg-hunter"
           >
-            SUBMIT
+            CREATE TRIP
           </button>
         </div>
         <p className="text-shimmer">{error}</p>

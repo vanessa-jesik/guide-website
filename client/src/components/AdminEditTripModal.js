@@ -11,22 +11,10 @@ import {
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-// Image import
-function importAll(r) {
-  let images = {};
-  r.keys().map((item, index) => {
-    images[item.replace("./", "")] = r(item);
-  });
-  return images;
-}
-
-const images = importAll(
-  require.context("./icons", false, /\.(png|jpe?g|svg)$/)
-);
-
-function AdminEditTripModal({ trip, setError, handleEditTrip }) {
+function AdminEditTripModal({ editIcon, trip, handleEditTrip }) {
   const { id, name, description } = trip;
   const [showModal, setShowModal] = useState(false);
+  const [error, setError] = useState(null);
 
   const initialValues = {
     name,
@@ -79,7 +67,7 @@ function AdminEditTripModal({ trip, setError, handleEditTrip }) {
           onClick={() => setShowModal(true)}
         >
           <img
-            src={images["edit.png"]}
+            src={editIcon}
             alt="edit icon by flaticon"
             className="h-7 mx-8"
           />
@@ -157,6 +145,7 @@ function AdminEditTripModal({ trip, setError, handleEditTrip }) {
               </div>
             </TEModalBody>
             <TEModalFooter>
+              <p className="text-shimmer ml-5 mb-5">{error}</p>
               <TERipple rippleColor="light">
                 <button
                   type="submit"

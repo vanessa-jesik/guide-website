@@ -14,7 +14,7 @@ class Admin(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     full_name = db.Column(db.String, nullable=False)
     user_type = db.Column(db.String, default="admin")
-    username = db.Column(db.String, unique=True, nullable=False)
+    username = db.Column(db.String(collation="NOCASE"), unique=True, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
 
     # Add serialization rules
@@ -91,7 +91,7 @@ class Client(db.Model, SerializerMixin):
     dob = db.Column(db.Date, nullable=False)
     waiver = db.Column(db.Boolean, default=False)
     user_type = db.Column(db.String, default="client")
-    username = db.Column(db.String, unique=True, nullable=False)
+    username = db.Column(db.String(collation="NOCASE"), unique=True, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
 
     # Add relationships
@@ -214,7 +214,7 @@ class Trip(db.Model, SerializerMixin):
     __tablename__ = "trips"
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, unique=True, nullable=False)
+    name = db.Column(db.String(collation="NOCASE"), unique=True, nullable=False)
     description = db.Column(db.String, nullable=False)
 
     # Add relationships
