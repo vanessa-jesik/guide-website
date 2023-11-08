@@ -4,7 +4,6 @@ import { BrowserRouter as Router } from "react-router-dom";
 import App from "./components/App";
 import "tw-elements-react/dist/css/tw-elements-react.min.css";
 import "./index.css";
-import("preline");
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -13,3 +12,6 @@ root.render(
     <App />
   </Router>
 );
+
+// To be added for production:
+// basename = "/estes_park_mountain_guide";
