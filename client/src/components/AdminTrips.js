@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { CurrentUserContext } from "./App.js";
 import AdminCreateTripForm from "./AdminCreateTripForm.js";
 import AdminEditTripModal from "./AdminEditTripModal.js";
+import AdminDeleteTripModal from "./AdminDeleteTripModal.js";
 
 // Image import
 function importAll(r) {
@@ -37,21 +38,10 @@ function AdminTrips() {
     setTrips(updatedTrips);
   }
 
-  // function handleDeleteTrip(id) {
-  //   setError(null);
-  //   fetch(`/trips/${id}`, { method: "DELETE" })
-  //     .then(response => {
-  //       if (!response.ok) {
-  //         response.json().then(err => setError(err.error));
-  //       } else {
-  //         const updatedTrips = trips.filter(trip => trip.id !== id);
-  //         setTrips(updatedTrips);
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.error("Error deleting trip:", error);
-  //     });
-  // }
+  function handleDeleteTrip(id) {
+    const updatedTrips = trips.filter(trip => trip.id !== id);
+    setTrips(updatedTrips);
+  }
 
   return (
     <>
@@ -102,13 +92,11 @@ function AdminTrips() {
                   />
                 </td>
                 <td className="border border-gray-100">
-                  <button type="button">
-                    <img
-                      src={images["delete.png"]}
-                      alt="trash can icon by flaticon"
-                      className="h-8 mx-10"
-                    />
-                  </button>
+                  <AdminDeleteTripModal
+                    id={trip.id}
+                    deleteIcon={deleteIcon}
+                    handleDeleteTrip={handleDeleteTrip}
+                  />
                 </td>
               </tr>
             ))}

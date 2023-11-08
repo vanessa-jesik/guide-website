@@ -86,7 +86,7 @@ class Client(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     given_name = db.Column(db.String, nullable=False)
-    family_name = db.Column(db.String, nullable=False)
+    family_name = db.Column(db.String(collation="NOCASE"), nullable=False)
     full_name = db.Column(db.String, nullable=False)
     dob = db.Column(db.Date, nullable=False)
     waiver = db.Column(db.Boolean, default=False)

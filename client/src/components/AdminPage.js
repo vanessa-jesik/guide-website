@@ -12,7 +12,9 @@ function AdminPage() {
   return (
     <>
       <AdminNav />
-      {location.pathname === "/admin" ? <p>Welcome Admin!</p> : null}
+      {location.pathname === "/admin" ? (
+        <p className="text-5xl text-center mt-5">Welcome Admin!</p>
+      ) : null}
       <Routes>
         <Route path="/admin_trips" element={<AdminTrips />} />
         <Route path="/admin_clients" element={<AdminClients />} />

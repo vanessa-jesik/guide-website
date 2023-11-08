@@ -35,7 +35,9 @@ function SignIn() {
         } else {
           response.json().then(user => {
             setCurrentUser(user);
-            navigate("/trips");
+            if (user.user_type === "admin") {
+              navigate("/admin");
+            } else navigate("/trips");
           });
         }
       })
@@ -52,7 +54,7 @@ function SignIn() {
       <form onSubmit={formik.handleSubmit} className="mx-4 mb-28">
         <div className="m-2">
           <label htmlFor="username" className="font-semibold">
-            Username:
+            Username (not case sensitive):
           </label>
           <br />
           <input

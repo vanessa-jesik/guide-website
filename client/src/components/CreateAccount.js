@@ -78,13 +78,12 @@ function CreateAccount() {
   const formik = useFormik({ initialValues, validationSchema, onSubmit });
 
   return (
-    <div>
-      <h1 className="text-xl font-bold px-4 py-2">Create Account</h1>
-      <h2>
-        Creating an account will log you in where you will be able to sign-up
-        for trips.
-      </h2>
-      <form onSubmit={formik.handleSubmit} className="mx-4 mb-28">
+    <div className="mx-4 mt-5 mb-28">
+      <h1 className="text-2xl font-bold m-2">Create Account</h1>
+      <p className="m-2">
+        With an account, you will be able to sign up for trips!
+      </p>
+      <form onSubmit={formik.handleSubmit}>
         <div className="m-2">
           <label htmlFor="given_name" className="font-semibold">
             Given Name:
@@ -162,7 +161,7 @@ function CreateAccount() {
         </div>
         <div className="m-2">
           <label htmlFor="username" className="font-semibold">
-            Username:
+            Username (not case sensitive):
           </label>
           <br />
           <input
