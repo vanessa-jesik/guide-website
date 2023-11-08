@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-function AdminCreateTripForm({ handleAddTrip, setShowAddTripForm }) {
+function AdminCreateTripForm({ handleCreateTrip, setShowCreateTripForm }) {
   const [error, setError] = useState(null);
 
   const initialValues = {
@@ -37,8 +37,8 @@ function AdminCreateTripForm({ handleAddTrip, setShowAddTripForm }) {
         } else {
           response.json().then(newTrip => {
             {
-              handleAddTrip(newTrip);
-              setShowAddTripForm(false);
+              handleCreateTrip(newTrip);
+              setShowCreateTripForm(false);
             }
           });
         }
@@ -49,7 +49,7 @@ function AdminCreateTripForm({ handleAddTrip, setShowAddTripForm }) {
   const formik = useFormik({ initialValues, validationSchema, onSubmit });
 
   return (
-    <div className="border border-gray-300 rounded-md">
+    <div className="w-3/5 border border-gray-300 rounded-md">
       <h1 className="text-xl font-bold px-4 py-2">Enter new trip details!</h1>
       <form onSubmit={formik.handleSubmit} className="m-4">
         <div className="m-2">
