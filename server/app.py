@@ -18,12 +18,18 @@ from models import Admin, Client, Trip, ClientTrip, Review
 # Views go here!
 @app.before_request
 def check_if_signed_in():
-    open_access = ["create_account", "check_session", "sign_in", "reviews", "trips"]
-    if (request.endpoint) not in open_access:
-        if session.get("admin_id"):
-            return None
-        elif not session.get("client_id"):
-            return {"error": "401 Unauthorized"}, 401
+    open_access = ["create_account", "check_session", "sign_in", "trips", "reviews"]
+    admin_only = ["clients", "trips_admin", "tripbyid", "client_trips"]
+    endpoint = request.endpoint
+    if endpoint in open_access:
+        return None
+    elif session.get("admin_id"):
+        return None
+    elif session.get("client_id"):
+        if endpoint in admin_only:
+            return {"error": "403 Forbidden"}, 403
+    else:
+        return {"error": "401 Unauthorized"}, 401
 
 
 class CreateAccount(Resource):
@@ -102,6 +108,8 @@ class Trips(Resource):
     def get(self):
         return [trip.to_dict() for trip in Trip.query.all()], 200
 
+
+class TripsAdmin(Resource):
     def post(self):
         trip_json = request.get_json()
         trip = Trip()
@@ -168,24 +176,17 @@ class ReviewById(Resource):
         return {"error": "Review not found"}, 404
 
 
-# A view for testing/viewing data format
-class ClientById(Resource):
-    def get(self, id):
-        client = db.session.get(Client, id)
-        return client.to_dict(), 200
-
-
 api.add_resource(CreateAccount, "/create_account", endpoint="create_account")
 api.add_resource(CheckSession, "/check_session", endpoint="check_session")
 api.add_resource(SignIn, "/sign_in", endpoint="sign_in")
 api.add_resource(SignOut, "/sign_out", endpoint="sign_out")
 api.add_resource(Clients, "/clients", endpoint="clients")
 api.add_resource(Trips, "/trips", endpoint="trips")
+api.add_resource(TripsAdmin, "/trips_admin", endpoint="trips_admin")
 api.add_resource(TripById, "/trips/<int:id>", endpoint="tripbyid")
 api.add_resource(ClientTrips, "/client_trips", endpoint="client_trips")
 api.add_resource(Reviews, "/reviews", endpoint="reviews")
 api.add_resource(ReviewById, "/reviews/<int:id>", endpoint="reviewbyid")
-api.add_resource(ClientById, "/clientbyid/<int:id>")
 
 
 if __name__ == "__main__":

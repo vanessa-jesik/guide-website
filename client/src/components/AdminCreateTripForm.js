@@ -23,7 +23,7 @@ function AdminCreateTripForm({ handleAddTrip, setShowAddTripForm }) {
 
   const onSubmit = values => {
     setError(null);
-    fetch("/trips", {
+    fetch("/trips_admin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
