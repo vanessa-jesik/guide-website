@@ -50,7 +50,7 @@ function Home() {
             {reviews ? (
               reviews.map(review => (
                 <div key={review.id} className="px-10 py-10">
-                  <blockquote className="relative bg-white bg-opacity-20 rounded-xl p-1">
+                  <blockquote className="relative bg-white bg-opacity-40 rounded-xl p-1">
                     <svg
                       className="absolute top-0 left-0 transform -translate-x-6 -translate-y-8 h-16 w-16 text-gray-300"
                       width="16"
