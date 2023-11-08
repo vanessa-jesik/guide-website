@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { CurrentUserContext } from "./App.js";
 import AdminEditTripForm from "./AdminEditTripForm.js";
 import AdminCreateTripForm from "./AdminCreateTripForm.js";
 
@@ -16,18 +17,15 @@ const images = importAll(
 );
 
 function AdminTrips() {
-  const [trips, setTrips] = useState(null);
+  const { trips, setTrips } = useContext(CurrentUserContext);
   const [error, setError] = useState(null);
   const [showAddTripForm, setShowAddTripForm] = useState(false);
 
-  useEffect(() => {
-    fetch("/trips")
-      .then(response => response.json())
-      .then(trips => setTrips(trips))
-      .catch(error => {
-        console.error("Error retrieving trips:", error);
-      });
-  }, []);
+  function handleAddTrip(newTrip) {
+    const updatedTrips = [...trips, newTrip];
+    setTrips(updatedTrips);
+    setError(null);
+  }
 
   function handleEditTrip(updatedTrip) {
     const updatedTrips = trips.map(trip => {
@@ -53,12 +51,6 @@ function AdminTrips() {
       .catch(error => {
         console.error("Error deleting trip:", error);
       });
-  }
-
-  function handleAddTrip(newTrip) {
-    const updatedTrips = [...trips, newTrip];
-    setTrips(updatedTrips);
-    setError(null);
   }
 
   return (

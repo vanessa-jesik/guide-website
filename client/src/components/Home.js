@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
+import { CurrentUserContext } from "./App.js";
 import HomeCarousel from "./HomeCarousel.js";
 
 // Image import
@@ -15,16 +16,7 @@ const images = importAll(
 );
 
 function Home() {
-  const [reviews, setReviews] = useState(null);
-
-  useEffect(() => {
-    fetch("/reviews")
-      .then(response => response.json())
-      .then(reviews => setReviews(reviews))
-      .catch(error => {
-        console.error("Error retrieving reviews:", error);
-      });
-  }, []);
+  const { reviews } = useContext(CurrentUserContext);
 
   return (
     <div>
@@ -48,7 +40,7 @@ function Home() {
         >
           <div className="flex flex-col w-1/2">
             {reviews ? (
-              reviews.map(review => (
+              reviews.slice(0, 10).map(review => (
                 <div key={review.id} className="px-10 py-10">
                   <blockquote className="relative bg-white bg-opacity-40 rounded-xl p-1">
                     <svg

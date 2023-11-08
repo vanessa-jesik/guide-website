@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
+import { CurrentUserContext } from "./App.js";
 
 // Image import
 function importAll(r) {
@@ -14,19 +15,10 @@ const images = importAll(
 );
 
 function Trips() {
-  const [trips, setTrips] = useState(null);
-
-  useEffect(() => {
-    fetch("/trips")
-      .then(response => response.json())
-      .then(trips => setTrips(trips))
-      .catch(error => {
-        console.error("Error retrieving trips:", error);
-      });
-  }, []);
+  const { trips } = useContext(CurrentUserContext);
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-4 m-4">
       {trips ? (
         trips.map(trip => (
           <div

@@ -16,7 +16,7 @@ const images = importAll(
 
 function HomeCarousel() {
   return (
-    <>
+    <div className="w-3/5 mx-auto">
       <TECarousel showControls ride="carousel">
         <div className="relative w-full overflow-hidden after:clear-both after:block after:content-['']">
           <TECarouselItem
@@ -321,7 +321,7 @@ function HomeCarousel() {
           </TECarouselItem>
         </div>
       </TECarousel>
-    </>
+    </div>
   );
 }
 

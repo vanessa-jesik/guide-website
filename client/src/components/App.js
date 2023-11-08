@@ -14,6 +14,8 @@ export const CurrentUserContext = React.createContext();
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
+  const [trips, setTrips] = useState(null);
+  const [reviews, setReviews] = useState(null);
 
   useEffect(() => {
     fetch("/check_session")
@@ -27,8 +29,35 @@ function App() {
       });
   }, []);
 
+  useEffect(() => {
+    fetch("/trips")
+      .then(response => response.json())
+      .then(trips => setTrips(trips))
+      .catch(error => {
+        console.error("Error retrieving trips:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch("/reviews")
+      .then(response => response.json())
+      .then(reviews => setReviews(reviews))
+      .catch(error => {
+        console.error("Error retrieving reviews:", error);
+      });
+  }, []);
+
   return (
-    <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
+    <CurrentUserContext.Provider
+      value={{
+        currentUser,
+        setCurrentUser,
+        reviews,
+        setReviews,
+        trips,
+        setTrips,
+      }}
+    >
       <div className="selection:bg-gray-200">
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Navbar />

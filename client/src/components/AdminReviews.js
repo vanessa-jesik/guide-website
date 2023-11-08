@@ -1,17 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { CurrentUserContext } from "./App.js";
 
 function AdminReviews() {
-  const [reviews, setReviews] = useState(null);
+  const { reviews, setReviews } = useContext(CurrentUserContext);
   const [error, setError] = useState(null);
-
-  useEffect(() => {
-    fetch("/reviews")
-      .then(response => response.json())
-      .then(reviews => setReviews(reviews))
-      .catch(error => {
-        console.error("Error retrieving reviews:", error);
-      });
-  }, []);
 
   function handleDeleteReview(id) {
     setError(null);

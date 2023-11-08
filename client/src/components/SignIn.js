@@ -5,7 +5,7 @@ import * as yup from "yup";
 import { CurrentUserContext } from "./App.js";
 
 function SignIn() {
-  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+  const { setCurrentUser } = useContext(CurrentUserContext);
   const [error, setError] = useState([]);
   const navigate = useNavigate();
 

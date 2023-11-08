@@ -6,7 +6,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { CurrentUserContext } from "./App.js";
 
 function CreateAccount() {
-  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+  const { setCurrentUser } = useContext(CurrentUserContext);
   const [error, setError] = useState([]);
   const navigate = useNavigate();
 
