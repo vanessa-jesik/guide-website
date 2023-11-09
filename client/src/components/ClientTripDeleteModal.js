@@ -32,8 +32,8 @@ function ClientTripDeleteModal({ id, handleDeleteClientTrip }) {
         if (!response.ok) {
           response.json().then(err => setError(err.error));
         } else {
-          handleDeleteClientTrip(id);
           setShowModal(false);
+          handleDeleteClientTrip(id);
         }
       })
       .catch(error => {

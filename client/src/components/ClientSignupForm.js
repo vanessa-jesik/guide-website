@@ -50,31 +50,33 @@ function ClientSignupForm({ id, handleSignup }) {
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <div className="m-2">
-        <label htmlFor="start_date" className="font-semibold">
-          Choose a date:
-        </label>
-        <br />
-        <DatePicker
-          id="start_date"
-          name="start_date"
-          format="YYYY-MM-DD"
-          onChange={date => {
-            if (date) {
-              formik.setFieldValue(
-                "start_date",
-                date.toISOString().split("T")[0]
-              );
-            } else {
-              formik.setFieldValue("start_date", null);
-            }
-          }}
-          onBlur={formik.handleBlur}
-          value={formik.values.start_date}
-        />
-        <p className="text-shimmer">
-          {formik.touched.start_date && formik.errors.start_date}
-        </p>
+      <div className="m-2 bg-white bg-opacity-50 rounded-md">
+        <div className="p-2">
+          <label htmlFor="start_date" className="font-semibold">
+            Choose a date:
+          </label>
+          <br />
+          <DatePicker
+            id="start_date"
+            name="start_date"
+            format="YYYY-MM-DD"
+            onChange={date => {
+              if (date) {
+                formik.setFieldValue(
+                  "start_date",
+                  date.toISOString().split("T")[0]
+                );
+              } else {
+                formik.setFieldValue("start_date", null);
+              }
+            }}
+            onBlur={formik.handleBlur}
+            value={formik.values.start_date}
+          />
+          <p className="text-shimmer">
+            {formik.touched.start_date && formik.errors.start_date}
+          </p>
+        </div>
       </div>
       <div className="m-2">
         <label htmlFor="trip_id" className="font-semibold">
@@ -87,7 +89,7 @@ function ClientSignupForm({ id, handleSignup }) {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.trip_id}
-          className="border border-gray-300 p-2 mb-2 w-full rounded-md focus:outline-sky-dark"
+          className="text-gray-800 border border-gray-300 p-2 mb-2 w-full rounded-md focus:outline-sky-dark"
         >
           <option label="Select a trip" />
           {trips
@@ -111,7 +113,7 @@ function ClientSignupForm({ id, handleSignup }) {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.notes}
-          className="border border-gray-300 p-2 mb-2 w-full resize-y rounded-md focus:outline-sky-dark"
+          className="text-gray-800 border border-gray-300 p-2 mb-2 w-full resize-y rounded-md focus:outline-sky-dark"
           rows="4"
         ></textarea>
         <p className="text-shimmer">

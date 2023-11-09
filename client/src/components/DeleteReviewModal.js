@@ -32,8 +32,8 @@ function DeleteReviewModal({ id, handleDeleteReview }) {
         if (!response.ok) {
           response.json().then(err => setError(err.error));
         } else {
-          handleDeleteReview(id);
           setShowModal(false);
+          handleDeleteReview(id);
         }
       })
       .catch(error => {

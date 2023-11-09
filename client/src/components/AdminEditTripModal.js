@@ -47,8 +47,8 @@ function AdminEditTripModal({ editIcon, trip, handleEditTrip }) {
           response.json().then(err => setError(err.error));
         } else {
           response.json().then(updatedTrip => {
-            handleEditTrip(updatedTrip);
             setShowModal(false);
+            handleEditTrip(updatedTrip);
           });
         }
       })

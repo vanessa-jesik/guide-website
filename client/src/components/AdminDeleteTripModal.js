@@ -20,8 +20,8 @@ function AdminDeleteTripModal({ id, deleteIcon, handleDeleteTrip }) {
         if (!response.ok) {
           response.json().then(err => setError(err.error));
         } else {
-          handleDeleteTrip(id);
           setShowModal(false);
+          handleDeleteTrip(id);
         }
       })
       .catch(error => {
