@@ -61,7 +61,7 @@ function Navbar() {
                 location.pathname === "/trips" ? "bg-sky" : ""
               }`}
             >
-              TRIPS
+              EXPLORE OUTINGS
             </NavLink>
             <NavLink
               to="/create_account"
@@ -112,7 +112,7 @@ function Navbar() {
                 location.pathname === "/trips" ? "bg-sky" : ""
               }`}
             >
-              TRIPS
+              EXPLORE OUTINGS
             </NavLink>
             {currentUser.user_type === "admin" ? (
               // Signed in admin navbar additions

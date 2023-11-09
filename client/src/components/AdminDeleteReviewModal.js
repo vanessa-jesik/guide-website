@@ -5,7 +5,6 @@ import {
   TEModalDialog,
   TEModalContent,
   TEModalHeader,
-  TEModalBody,
   TEModalFooter,
 } from "tw-elements-react";
 
@@ -54,7 +53,7 @@ function AdminDeleteReviewModal({ id, handleDeleteReview }) {
           <img
             src={images["delete.png"]}
             alt="trash can icon by flaticon"
-            className="h-8 mx-6"
+            className="h-8 ml-6 mr-9"
           />
         </button>
       </TERipple>

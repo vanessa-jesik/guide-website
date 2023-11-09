@@ -8,6 +8,7 @@ import About from "./About.js";
 import Trips from "./Trips.js";
 import CreateAccount from "./CreateAccount.js";
 import SignIn from "./SignIn.js";
+import ClientById from "./ClientById.js";
 import AdminPage from "./AdminPage.js";
 
 export const CurrentUserContext = React.createContext();
@@ -67,6 +68,7 @@ function App() {
             <Route path="/trips" element={<Trips />} />
             <Route path="/create_account" element={<CreateAccount />} />
             <Route path="/sign_in" element={<SignIn />} />
+            <Route path="/my_page" element={<ClientById />} />
             {/* Routes only available to admin*/}
             {currentUser?.user_type === "admin" ? (
               <Route path="/admin/*" element={<AdminPage />} />

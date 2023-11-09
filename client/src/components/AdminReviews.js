@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { CurrentUserContext } from "./App.js";
 import AdminDeleteReviewModal from "./AdminDeleteReviewModal.js";
 
@@ -11,23 +11,31 @@ function AdminReviews() {
   }
 
   return reviews ? (
-    <table>
-      <tbody>
-        {reviews.map(review => (
-          <tr key={review.id}>
-            <td>{review.date}</td>
-            <td>{review.comment}</td>
-            <td>{review.client.full_name}</td>
-            <td>
-              <AdminDeleteReviewModal
-                id={review.id}
-                handleDeleteReview={handleDeleteReview}
-              />
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div className="flex justify-center items-center mt-16">
+      <table className="table-auto w-4/5 text-center">
+        <tbody>
+          {reviews.map(review => (
+            <tr key={review.id}>
+              <td className="px-2 py-4 border-t-2 border-b-2 whitespace-nowrap">
+                {review.date}
+              </td>
+              <td className="px-3 py-4 border-t-2 border-b-2">
+                {review.comment}
+              </td>
+              <td className="px-2 py-4 border-t-2 border-b-2 whitespace-nowrap">
+                {review.client.full_name}
+              </td>
+              <td className="px-2 py-4 border-t-2 border-b-2">
+                <AdminDeleteReviewModal
+                  id={review.id}
+                  handleDeleteReview={handleDeleteReview}
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   ) : (
     <p>Loading table of reviews...</p>
   );
