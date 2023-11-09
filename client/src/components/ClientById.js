@@ -50,9 +50,10 @@ function ClientById() {
   // }
 
   return (
-    <div>
+    <div className="flex flex-wrap justify-center">
+      {/* Today's Trip Section */}
       {todayTrip.length === 1 ? (
-        <div id="today_trip_div">
+        <div id="today_trip_div" className="bg-lapis-dark text-white p-4">
           <h1>
             Get ready to explore, create memories, and embrace new experiences!
             Pack your enthusiasm, curiosity, and a dash of spontaneity - it's
@@ -61,54 +62,63 @@ function ClientById() {
           </h1>
         </div>
       ) : null}
-      <div id="waiver_div">
+
+      {/* Waiver Section */}
+      <div id="waiver_div" className="bg-alice-dark text-hunter-dark p-4">
         {currentUser?.waiver ? (
           <p>Thank you! We have your waiver on file.</p>
         ) : (
           <p>Please return your waiver to us at your earliest convenience.</p>
         )}
       </div>
-      <div id="future_trip_div">
-        <h1>Future Escapades:</h1>
+
+      {/* Future Trips Section */}
+      <div id="future_trip_div" className="bg-sky-dark text-white p-4">
+        <h1 className="text-2xl font-bold mb-4">Future Escapades:</h1>
         {upcomingTrips.length >= 1 ? (
           upcomingTrips.map(trip => (
-            <div key={trip.id}>
-              <p>{trip.start_date}</p>
-              <p>{trip.trip.name}</p>
+            <div key={trip.id} className="mb-4">
+              <p className="text-lg font-semibold">{trip.start_date}</p>
+              <p className="text-xl">{trip.trip.name}</p>
               <p>{trip.notes}</p>
               {!trip.paid ? (
-                <p>
+                <p className="text-hunter-dark">
                   Balance Due: Please complete payment 72 hours prior to start
                   date.
                 </p>
               ) : (
-                <p>Paid in Full</p>
+                <p className="text-asparagus-dark">Paid in Full</p>
               )}
-              {/* <ClientTripDeleteModal
-                id={trip.id}
-                handleDeleteClientTrip={handleDeleteClientTrip}
-              /> */}
             </div>
           ))
         ) : (
-          <p>You don't yet have any upcoming trips. Book an adventure below!</p>
+          <p className="text-white">
+            You don't yet have any upcoming trips. Book an adventure below!
+          </p>
         )}
       </div>
-      <div id="book_trip_div">
+
+      {/* Book Trip Section */}
+      <div id="book_trip_div" className="bg-hunter-dark text-white p-4">
         <ClientSignupForm id={id} handleSignup={handleSignup} />
       </div>
-      <div id="past_trip_div">
+
+      {/* Past Trips Section */}
+      <div id="past_trip_div" className="bg-asparagus-dark text-white p-4">
         {pastTrips.length >= 1 ? (
           <>
-            <h1>Past Experiences:</h1>
+            <h1 className="text-2xl font-bold mb-4">Past Experiences:</h1>
             {pastTrips.map(trip => (
-              <div key={trip.id}>
-                <p>{trip.start_date}</p>
-                <p>{trip.trip.name}</p>
+              <div key={trip.id} className="mb-4">
+                <p className="text-lg font-semibold">{trip.start_date}</p>
+                <p className="text-xl">{trip.trip.name}</p>
                 <p>{trip.notes}</p>
               </div>
             ))}
-            <div id="add_review_div">
+            <div
+              id="add_review_div"
+              className="bg-parchment-dark text-hunter-dark p-4"
+            >
               <ClientReviewForm
                 id={id}
                 handleCreateReview={handleCreateReview}
@@ -117,17 +127,20 @@ function ClientById() {
           </>
         ) : null}
       </div>
+
+      {/* Published Reviews Section */}
       {reviews ? (
-        <div id="published_review_div">
+        <div
+          id="published_review_div"
+          className="bg-shimmer-dark text-white p-4"
+        >
           {reviews.map(review => (
-            <div key={review.id}>
-              <p>{review.date}</p>
+            <div key={review.id} className="mb-4">
+              <p className="text-lg font-semibold">{review.date}</p>
               <p>{review.comment}</p>
-              <button>Edit Review</button>
-              {/* <DeleteReviewModal
-                id={review.id}
-                handleDeleteReview={handleDeleteReview}
-              /> */}
+              {/* <button className="bg-lapis-dark text-white py-1 px-2 rounded">
+                Edit Review
+              </button> */}
             </div>
           ))}
         </div>
