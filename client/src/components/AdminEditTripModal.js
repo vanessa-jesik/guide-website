@@ -28,7 +28,7 @@ function AdminEditTripModal({ editIcon, trip, handleEditTrip }) {
       .required("Trip name is required"),
     description: yup
       .string()
-      .max(500, "Trip description must be 500 or fewer characters")
+      .max(1000, "Trip description must be 1000 or fewer characters")
       .required("Trip description is required"),
   });
 

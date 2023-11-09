@@ -27,7 +27,7 @@ function AdminNav() {
           location.pathname === "/admin/admin_client_trips" ? "font-bold" : ""
         }`}
       >
-        MANAGE CLIENT TRIPS
+        VIEW CLIENT TRIPS
       </NavLink>
       <NavLink
         to="admin_reviews"

@@ -24,7 +24,7 @@ function About() {
         />
         <img
           src={images["buster.jpg"]}
-          alt="Buster Jesik with big walls in Yosemite"
+          alt="Buster Jesik on big walls in Yosemite"
           className="rounded-md w-96 h-auto"
         />
       </div>

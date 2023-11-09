@@ -246,12 +246,12 @@ class Trip(db.Model, SerializerMixin):
             raise ValueError("Trip description is required")
         if not isinstance(description, str):
             raise ValueError("Trip description must be a string")
-        if len(description) > 500:
-            raise ValueError("Trip description must 500 or fewer characters")
+        if len(description) > 1000:
+            raise ValueError("Trip description must 1000 or fewer characters")
         return description
 
     def __repr__(self):
-        return f"<Trip {self.id}: {self.name} | Length: {self.length} day(s)>"
+        return f"<Trip {self.id}: {self.name}>"
 
 
 class ClientTrip(db.Model, SerializerMixin):

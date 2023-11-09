@@ -15,13 +15,13 @@ function ClientById() {
   const month = String(today.getMonth() + 1).padStart(2, "0");
   const day = String(today.getDate()).padStart(2, "0");
   const todayFormatted = `${year}-${month}-${day}`;
-  const pastTrips = client_trips.filter(
+  const pastTrips = client_trips?.filter(
     trip => trip.start_date < todayFormatted
   );
-  const todayTrip = client_trips.filter(
+  const todayTrip = client_trips?.filter(
     trip => trip.start_date === todayFormatted
   );
-  const upcomingTrips = client_trips.filter(
+  const upcomingTrips = client_trips?.filter(
     trip => trip.start_date > todayFormatted
   );
 
@@ -49,7 +49,7 @@ function ClientById() {
   //   setCurrentUser(prevUser => ({ ...prevUser, ...updatedClient }));
   // }
 
-  return (
+  return currentUser.user_type === "client" ? (
     <div className="flex flex-wrap justify-center">
       {/* Today's Trip Section */}
       {todayTrip.length === 1 ? (
@@ -146,6 +146,11 @@ function ClientById() {
         </div>
       ) : null}
     </div>
+  ) : (
+    <>
+      This displays trip and review information specific to the signed in
+      client.
+    </>
   );
 }
 export default ClientById;

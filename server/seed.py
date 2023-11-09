@@ -128,49 +128,49 @@ def create_trips():
 
     trip1 = Trip(
         name="Beginner Rock Climbing",
-        description="This outing is perfect for individuals looking to get their start in climbing or for the whole family to get outside together! Half day and full days available.",
+        description="Have you every wanted to try real rock climbing? Once considered an obscure and “extreme” activity rock climbing has become more main stream and accessible then ever! All ability, ages and fitness levels can be accommodated for an introductory day of fun and learning!",
     )
     trips.append(trip1)
 
     trip2 = Trip(
         name="Climb on Iconic Lumpy Ridge",
-        description="Lumpy Ridge has a rich history in the Estes Park climbing community and is full of fun classics! Be a part of that story and enjoy a day looking down on town!",
+        description="Lumpy ridge is an iconic climbing area clearly visible from Estes Park. The granite domes of Lumpy have been a destination for many generations of traditional climbers looking to improve their technique on the classic slab and crack routes. Lumpy has something for everyone from beginner friendly top rope areas to classic multi pitch routes and sustained crack climbs.",
     )
     trips.append(trip2)
 
     trip3 = Trip(
         name="Petit Grepon",
-        description="Climb a spire rising above Sky Pond in Rocky Mountain National Park.  The summit, a pedestal in the sky, will surely be unforgettable.",
+        description="The Petite Grepon is listed in Allen Steck and Steve Roper’s book “Fifty Classic Climbs of North America for good reason. This 800 foot high rock spire towers above Sky Pond and culminates with a dramatic summit in the heart of Rocky Mountain National Park. This is an intermediate level multi pitch rock climb for those looking for the classic alpine rock climbing experience!",
     )
     trips.append(trip3)
 
     trip4 = Trip(
         name="Cables Route - North Face of Longs Peak",
-        description="Summit Longs Peak via the Cables Route - a moderate climb overlooking the Boulder Field.",
+        description="Longs Peak sits above Estes at a height of 14,259 (4347m) and is the northern most fourteener in the entire Rocky Mountain chain. It is widely considered one of the most challenging and technical peaks to summit in Colorado. With its vertical faces, permanent snow fields and ever changing conditions Longs Peak has attracted mountaineers and rock climbers from around the world.\n\nClimbing Longs peak is easiest during the late spring and summer seasons. Autumn and winter ascents are possible but less likely due to short days and cold, windy weather. May / June offer the best snow conditions for mountaineering while July - September are the driest months for rock scrambling and technical rock climbing. Expect and early start and a 10-14 hour long day. Some prefer to climb Longs peak as a 2 or even 3 day outing.",
     )
     trips.append(trip4)
 
     trip5 = Trip(
         name="The Diamond - East Face of Longs Peak",
-        description="The penultimate climbing object in the Estes Park area. Splitter cracks at 13,000 feet looking out over the Chasm Cirque.",
+        description="The Diamond of Longs Peak is one of the most prominent and dramatic alpine walls in the country. For many an ascent of the Diamond may be the crowning achievement of a lifetime of rock climbing. This is for serious rock climbers only as every route on the Diamond is 5.10 or harder. The style of climbing consists of high quality pitches of vertical crack and face climbing at 13,000 feet.",
     )
     trips.append(trip5)
 
     trip6 = Trip(
         name="Back Country Skiing",
-        description="Explore the back country with a certified guide! Skip the lift lines and enjoy fields of untracked powder!",
+        description="Ski areas are a great place to start… but there is no substitute for the experience of “earning your turns” and riding the wild snow of the backcountry. Skiing / snowboarding with a guide maximizes the potential for finding quality snow conditions and minimizes the risks of the backcountry. Contact us for educational days, guided tours, overnight hut trips and remote expeditions!",
     )
     trips.append(trip6)
 
     trip7 = Trip(
         name="Winter Ice Climbing",
-        description="Experience the reverie of climbing a frozen waterfall. All abilities welcome!",
+        description="Ice climbing is an essential skill for mountaineers who want to get into more technical alpine terrain. It is also a lot of fun all on its own! Ice climbing season in Colorado usually begins in mid to late November and can last until April. December - February is the most reliable time of year for most of the classic ice climbs. All ability / experience levels are welcome! Come learn the subtle and graceful art of ice climbing or just have a fun experience with one of the most experienced ice climbing guides in the country!",
     )
     trips.append(trip7)
 
     trip8 = Trip(
         name="Spring Mountaineering",
-        description="April, May, and June are the best months of the year to experience snow climbing in the Colorado Rockies! Outings for beginners and classic mountaineering objects for experienced climbers.",
+        description="For those looking for the true mountaineering adventure! Mountaineering season usually starts in late March and goes through June in the Colorado Rockies. Strap on your crampons and grab your ice axe for the classic gullies and mixed routes of Rocky Mountain National Park and beyond!",
     )
     trips.append(trip8)
 
@@ -304,6 +304,27 @@ def create_reviews():
         client_id=4,
     )
     reviews.append(review5)
+
+    review6 = Review(
+        date=date(2023, 7, 15),
+        comment="My day out climbing with a guide in the mountains was nothing short of spectacular. From the moment we strapped on our gear to reaching the summit, the guide's expertise and passion for the mountains were evident. The breathtaking views, coupled with the thrill of conquering challenging peaks, made for an unforgettable experience. I felt safe yet exhilarated, and the guide's knowledge of the terrain added a fascinating educational aspect to the journey. Highly recommend for both novice climbers and seasoned adventurers seeking a memorable day in nature's grandeur.",
+        client_id=2,
+    )
+    reviews.append(review6)
+
+    review7 = Review(
+        date=date(2023, 8, 20),
+        comment="Climbing with a guide elevated my mountain experience to new heights. The guide's knowledge of the terrain, combined with a genuine love for the sport, created an environment of both excitement and security. Each step was a discovery, and the guide's insights into the local flora and fauna enriched the journey. The well-paced climb allowed for moments of reflection amidst the rugged beauty of the mountains. This outing is a must for those seeking not just a physical challenge, but an immersive and educational mountain escapade.",
+        client_id=6,
+    )
+    reviews.append(review7)
+
+    review8 = Review(
+        date=date(2023, 9, 13),
+        comment="An amazing day out climbing with a guide turned into a triumph as we reached the summit. The guide's encouragement and support were pivotal in pushing through challenging sections, making the accomplishment even more rewarding. The day was filled with laughter, camaraderie, and a shared sense of achievement. The guide's expertise not only ensured our safety but also enhanced the overall enjoyment of the climb. If you're looking for a day filled with both adventure and a sense of accomplishment, this guided mountain climb is the perfect choice.",
+        client_id=3,
+    )
+    reviews.append(review8)
 
     return reviews
 
