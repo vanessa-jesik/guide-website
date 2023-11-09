@@ -33,10 +33,10 @@ function Home() {
         </div>
       </header>
       <HomeCarousel />
-      <div className="w-full h-full my-10">
+      <div className="w-full h-full mt-10 mb-20">
         <div
           style={{ backgroundImage: `url(${images["light.jpeg"]})` }}
-          className="bg-cover bg-no-repeat h-full w-full"
+          className="bg-cover bg-no-repeat bg-center bg-fixed w-full h-full"
         >
           <div className="flex flex-col w-1/2">
             {reviews ? (
