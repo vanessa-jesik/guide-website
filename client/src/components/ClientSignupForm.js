@@ -52,7 +52,7 @@ function ClientSignupForm({ id, handleSignup }) {
     <form onSubmit={formik.handleSubmit}>
       <div className="m-2">
         <label htmlFor="start_date" className="font-semibold">
-          Choose a start date:
+          Choose a date:
         </label>
         <br />
         <DatePicker

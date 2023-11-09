@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { CurrentUserContext } from "./App.js";
 import ClientCarousel from "./ClientCarousel.js";
 import ClientSignupForm from "./ClientSignupForm.js";
+import ClientTripDeleteModal from "./ClientTripDeleteModal.js";
 import ClientReviewForm from "./ClientReviewForm.js";
 import DeleteReviewModal from "./DeleteReviewModal.js";
 
@@ -26,6 +27,12 @@ function ClientById() {
 
   function handleSignup(booking) {
     const updatedClientTrips = client_trips.concat(booking);
+    const updatedClient = { ...currentUser, client_trips: updatedClientTrips };
+    setCurrentUser(updatedClient);
+  }
+
+  function handleDeleteClientTrip(trip_id) {
+    const updatedClientTrips = client_trips.filter(trip => trip.id !== trip_id);
     const updatedClient = { ...currentUser, client_trips: updatedClientTrips };
     setCurrentUser(updatedClient);
   }
@@ -77,7 +84,10 @@ function ClientById() {
               ) : (
                 <p>Paid in Full</p>
               )}
-              <button>Delete Trip</button>
+              <ClientTripDeleteModal
+                id={trip.id}
+                handleDeleteClientTrip={handleDeleteClientTrip}
+              />
             </div>
           ))
         ) : (

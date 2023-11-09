@@ -178,6 +178,16 @@ class ClientTrips(Resource):
             return {"error": e.__str__()}, 422
 
 
+class ClientTripById(Resource):
+    def delete(self, id):
+        client_trip = db.session.get(ClientTrip, id)
+        if client_trip:
+            db.session.delete(client_trip)
+            db.session.commit()
+            return {}, 204
+        return {"error": "Client trip not found"}, 404
+
+
 class Reviews(Resource):
     def get(self):
         return [
@@ -221,6 +231,7 @@ api.add_resource(TripsAdmin, "/trips_admin", endpoint="trips_admin")
 api.add_resource(TripById, "/trips/<int:id>", endpoint="tripbyid")
 api.add_resource(ClientTripsAdmin, "/client_trips_admin", endpoint="client_trips_admin")
 api.add_resource(ClientTrips, "/client_trips", endpoint="client_trips")
+api.add_resource(ClientTripById, "/client_trips/<int:id>", endpoint="clienttripbyid")
 api.add_resource(Reviews, "/reviews", endpoint="reviews")
 api.add_resource(ReviewsClient, "/reviews_client", endpoint="reviews_client")
 api.add_resource(ReviewById, "/reviews/<int:id>", endpoint="reviewbyid")
