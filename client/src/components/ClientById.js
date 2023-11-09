@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { CurrentUserContext } from "./App.js";
 import ClientCarousel from "./ClientCarousel.js";
 import ClientSignupForm from "./ClientSignupForm.js";
+import ClientReviewForm from "./ClientReviewForm.js";
 
 function ClientById() {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
@@ -28,6 +29,10 @@ function ClientById() {
     setCurrentUser(updatedClient);
   }
 
+  function handleCreateReview(review) {
+    console.log(review);
+  }
+
   return (
     <div>
       {todayTrip.length === 1 ? (
@@ -41,7 +46,7 @@ function ClientById() {
         </div>
       ) : null}
       <div id="waiver_div">
-        {currentUser.waiver ? (
+        {currentUser?.waiver ? (
           <p>Thank you! We have your waiver on file.</p>
         ) : (
           <p>Please return your waiver to us at your earliest convenience.</p>
@@ -63,7 +68,6 @@ function ClientById() {
               ) : (
                 <p>Paid in Full</p>
               )}
-              <button>Edit Trip</button>
               <button>Delete Trip</button>
             </div>
           ))
@@ -74,6 +78,38 @@ function ClientById() {
       <div id="book_trip_div">
         <ClientSignupForm id={id} handleSignup={handleSignup} />
       </div>
+      <div id="past_trip_div">
+        {pastTrips.length >= 1 ? (
+          <>
+            <h1>Past Experiences:</h1>
+            {pastTrips.map(trip => (
+              <div key={trip.id}>
+                <p>{trip.start_date}</p>
+                <p>{trip.trip.name}</p>
+                <p>{trip.notes}</p>
+              </div>
+            ))}
+            <div id="add_review_div">
+              <ClientReviewForm
+                id={id}
+                handleCreateReview={handleCreateReview}
+              />
+            </div>
+          </>
+        ) : null}
+      </div>
+      {reviews ? (
+        <div id="published_review_div">
+          {reviews.map(review => (
+            <div key={review.id}>
+              <p>{review.date}</p>
+              <p>{review.comment}</p>
+              <button>Edit Review</button>
+              <button>Delete Review</button>
+            </div>
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 }

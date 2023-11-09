@@ -161,8 +161,6 @@ class ClientTripsAdmin(Resource):
 class ClientTrips(Resource):
     def post(self):
         client_trip_json = request.get_json()
-        client_id = int(client_trip_json.get("client_id"))
-        client_trip_json["client_id"] = client_id
         trip_id = int(client_trip_json.get("trip_id"))
         client_trip_json["trip_id"] = trip_id
         client_trip = ClientTrip()
@@ -188,6 +186,21 @@ class Reviews(Resource):
         ], 200
 
 
+class ReviewsClient(Resource):
+    def post(self):
+        review_json = request.get_json()
+        review = Review()
+        try:
+            for key in review_json:
+                if hasattr(review, key):
+                    setattr(review, key, review_json[key])
+            db.session.add(review)
+            db.session.commit()
+            return review.to_dict(rules=("-client",)), 201
+        except ValueError as e:
+            return {"error": e.__str__()}, 422
+
+
 class ReviewById(Resource):
     def delete(self, id):
         review = db.session.get(Review, id)
@@ -209,6 +222,7 @@ api.add_resource(TripById, "/trips/<int:id>", endpoint="tripbyid")
 api.add_resource(ClientTripsAdmin, "/client_trips_admin", endpoint="client_trips_admin")
 api.add_resource(ClientTrips, "/client_trips", endpoint="client_trips")
 api.add_resource(Reviews, "/reviews", endpoint="reviews")
+api.add_resource(ReviewsClient, "/reviews_client", endpoint="reviews_client")
 api.add_resource(ReviewById, "/reviews/<int:id>", endpoint="reviewbyid")
 
 

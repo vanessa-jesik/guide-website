@@ -44,7 +44,7 @@ function ClientSignupForm({ id, handleSignup }) {
           });
         }
       })
-      .catch(error => console.error("Error adding trip:", error));
+      .catch(error => console.error("Error signing up for trip:", error));
   };
 
   const formik = useFormik({ initialValues, validationSchema, onSubmit });
