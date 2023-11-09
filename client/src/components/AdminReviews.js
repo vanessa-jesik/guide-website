@@ -10,34 +10,36 @@ function AdminReviews() {
     setReviews(updatedReviews);
   }
 
-  return reviews ? (
+  return (
     <div className="flex justify-center items-center mt-16">
-      <table className="table-auto w-4/5 text-center">
-        <tbody>
-          {reviews.map(review => (
-            <tr key={review.id}>
-              <td className="px-2 py-4 border-t-2 border-b-2 whitespace-nowrap">
-                {review.date}
-              </td>
-              <td className="px-3 py-4 border-t-2 border-b-2">
-                {review.comment}
-              </td>
-              <td className="px-2 py-4 border-t-2 border-b-2 whitespace-nowrap">
-                {review.client.full_name}
-              </td>
-              <td className="px-2 py-4 border-t-2 border-b-2">
-                <AdminDeleteReviewModal
-                  id={review.id}
-                  handleDeleteReview={handleDeleteReview}
-                />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {reviews ? (
+        <table className="table-auto w-4/5 text-center">
+          <tbody>
+            {reviews.map(review => (
+              <tr key={review.id}>
+                <td className="px-2 py-4 border-t-2 border-b-2 whitespace-nowrap">
+                  {review.date}
+                </td>
+                <td className="px-3 py-4 border-t-2 border-b-2">
+                  {review.comment}
+                </td>
+                <td className="px-2 py-4 border-t-2 border-b-2 whitespace-nowrap">
+                  {review.client.full_name}
+                </td>
+                <td className="px-2 py-4 border-t-2 border-b-2">
+                  <AdminDeleteReviewModal
+                    id={review.id}
+                    handleDeleteReview={handleDeleteReview}
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p>Loading table of reviews...</p>
+      )}
     </div>
-  ) : (
-    <p>Loading table of reviews...</p>
   );
 }
 

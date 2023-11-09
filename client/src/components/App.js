@@ -68,8 +68,9 @@ function App() {
             <Route path="/trips" element={<Trips />} />
             <Route path="/create_account" element={<CreateAccount />} />
             <Route path="/sign_in" element={<SignIn />} />
-            <Route path="/my_page" element={<ClientById />} />
-            {/* Routes only available to admin*/}
+            {currentUser ? (
+              <Route path="/my_page" element={<ClientById />} />
+            ) : null}
             {currentUser?.user_type === "admin" ? (
               <Route path="/admin/*" element={<AdminPage />} />
             ) : null}

@@ -50,7 +50,7 @@ function SignIn() {
             setCurrentUser(user);
             if (user.user_type === "admin") {
               navigate("/admin");
-            } else navigate("/trips");
+            } else navigate("/my_page");
           });
         }
       })

@@ -106,7 +106,7 @@ class Client(db.Model, SerializerMixin):
         "-_password_hash",
         "-client_trips.client",
         "-trips",
-        "-reviews",
+        "-reviews.client",
     )
 
     # Password
@@ -277,8 +277,13 @@ class ClientTrip(db.Model, SerializerMixin):
     def validate_start_date(self, key, start_date):
         if not start_date:
             raise ValueError("Start date is required")
+        if isinstance(start_date, str):
+            try:
+                start_date = datetime.strptime(start_date, "%Y-%m-%d").date()
+            except ValueError:
+                raise ValueError("Invalid date format - use 'YYYY-MM-DD'")
         if not isinstance(start_date, date):
-            raise ValueError("Start date must be a date object")
+            raise ValueError("Date of birth must be a date object")
         # Start date after today is important validation but seed data is created in past
         # if start_date <= date.today():
         #     raise ValueError("Start date must be after today")

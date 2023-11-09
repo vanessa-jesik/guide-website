@@ -19,7 +19,7 @@ from models import Admin, Client, Trip, ClientTrip, Review
 @app.before_request
 def check_if_signed_in():
     open_access = ["create_account", "check_session", "sign_in", "trips", "reviews"]
-    admin_only = ["clients", "trips_admin", "tripbyid", "client_trips"]
+    admin_only = ["clients", "trips_admin", "tripbyid", "client_trips_admin"]
     endpoint = request.endpoint
     if endpoint in open_access:
         return None
@@ -148,7 +148,7 @@ class TripById(Resource):
         return {"error": "Trip not found"}, 404
 
 
-class ClientTrips(Resource):
+class ClientTripsAdmin(Resource):
     def get(self):
         return [
             client_trip.to_dict()
@@ -156,6 +156,28 @@ class ClientTrips(Resource):
                 desc(ClientTrip.start_date)
             ).all()
         ], 200
+
+
+class ClientTrips(Resource):
+    def post(self):
+        client_trip_json = request.get_json()
+        client_id = int(client_trip_json.get("client_id"))
+        client_trip_json["client_id"] = client_id
+        trip_id = int(client_trip_json.get("trip_id"))
+        client_trip_json["trip_id"] = trip_id
+        client_trip = ClientTrip()
+        try:
+            for key in client_trip_json:
+                if hasattr(client_trip, key):
+                    setattr(client_trip, key, client_trip_json[key])
+            db.session.add(client_trip)
+            db.session.commit()
+            return (
+                client_trip.to_dict(rules=("-client",)),
+                201,
+            )
+        except ValueError as e:
+            return {"error": e.__str__()}, 422
 
 
 class Reviews(Resource):
@@ -184,6 +206,7 @@ api.add_resource(Clients, "/clients", endpoint="clients")
 api.add_resource(Trips, "/trips", endpoint="trips")
 api.add_resource(TripsAdmin, "/trips_admin", endpoint="trips_admin")
 api.add_resource(TripById, "/trips/<int:id>", endpoint="tripbyid")
+api.add_resource(ClientTripsAdmin, "/client_trips_admin", endpoint="client_trips_admin")
 api.add_resource(ClientTrips, "/client_trips", endpoint="client_trips")
 api.add_resource(Reviews, "/reviews", endpoint="reviews")
 api.add_resource(ReviewById, "/reviews/<int:id>", endpoint="reviewbyid")

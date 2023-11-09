@@ -253,6 +253,17 @@ def create_client_trips():
     client_trip12 = ClientTrip(start_date=date(2023, 12, 28), client_id=7, trip_id=6)
     client_trips.append(client_trip12)
 
+    # for testing:
+
+    client_trip12 = ClientTrip(start_date=date(2023, 11, 8), client_id=1, trip_id=6)
+    client_trips.append(client_trip12)
+
+    client_trip12 = ClientTrip(start_date=date(2023, 12, 28), client_id=1, trip_id=6)
+    client_trips.append(client_trip12)
+
+    client_trip12 = ClientTrip(start_date=date(2023, 12, 23), client_id=1, trip_id=6)
+    client_trips.append(client_trip12)
+
     return client_trips
 
 

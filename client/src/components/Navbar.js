@@ -69,7 +69,16 @@ function Navbar() {
           >
             CREATE ACCOUNT
           </NavLink>
-        ) : null}
+        ) : (
+          <NavLink
+            to="/my_page"
+            className={`text-alice-light px-3 py-1 hover:underline ${
+              location.pathname === "/my_page" ? "bg-sky" : ""
+            }`}
+          >
+            START YOUR ADVENTURE
+          </NavLink>
+        )}
         {currentUser?.user_type === "admin" ? (
           <NavLink
             to="/admin"

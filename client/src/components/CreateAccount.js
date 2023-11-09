@@ -106,7 +106,7 @@ function CreateAccount() {
             <div className="m-2">
               <label
                 htmlFor="given_name"
-                className="font-semibold tracking-wide"
+                className="font-semibold tracking-wider"
               >
                 Given Name:
               </label>
@@ -126,7 +126,7 @@ function CreateAccount() {
             <div className="m-2">
               <label
                 htmlFor="family_name"
-                className="font-semibold tracking-wide"
+                className="font-semibold tracking-wider"
               >
                 Family Name or Surname:
               </label>
@@ -146,7 +146,7 @@ function CreateAccount() {
             <div className="m-2">
               <label
                 htmlFor="full_name"
-                className="font-semibold tracking-wide"
+                className="font-semibold tracking-wider"
               >
                 Full Name:
               </label>
@@ -164,7 +164,7 @@ function CreateAccount() {
               </p>
             </div>
             <div className="m-2">
-              <label htmlFor="dob" className="font-semibold tracking-wide">
+              <label htmlFor="dob" className="font-semibold tracking-wider">
                 Date of Birth:
               </label>
               <br />
@@ -190,7 +190,10 @@ function CreateAccount() {
               </p>
             </div>
             <div className="m-2">
-              <label htmlFor="username" className="font-semibold tracking-wide">
+              <label
+                htmlFor="username"
+                className="font-semibold tracking-wider"
+              >
                 Username (not case sensitive):
               </label>
               <br />
@@ -207,7 +210,10 @@ function CreateAccount() {
               </p>
             </div>
             <div className="m-2">
-              <label htmlFor="password" className="font-semibold tracking-wide">
+              <label
+                htmlFor="password"
+                className="font-semibold tracking-wider"
+              >
                 Password:
               </label>
               <br />
@@ -227,7 +233,7 @@ function CreateAccount() {
             <div className="m-2">
               <label
                 htmlFor="confirm_password"
-                className="font-semibold tracking-wide"
+                className="font-semibold tracking-wider"
               >
                 Confirm Password:
               </label>
