@@ -21,7 +21,7 @@ const images = importAll(
   require.context("./icons", false, /\.(png|jpe?g|svg)$/)
 );
 
-function AdminDeleteReviewModal({ id, handleDeleteReview }) {
+function DeleteReviewModal({ id, handleDeleteReview }) {
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState(null);
 
@@ -110,4 +110,4 @@ function AdminDeleteReviewModal({ id, handleDeleteReview }) {
   );
 }
 
-export default AdminDeleteReviewModal;
+export default DeleteReviewModal;

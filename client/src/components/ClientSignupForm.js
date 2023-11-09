@@ -23,7 +23,7 @@ function ClientSignupForm({ id, handleSignup }) {
     trip_id: yup.number().required("Please select a trip"),
   });
 
-  const onSubmit = values => {
+  const onSubmit = (values, formikBag) => {
     setError(null);
     fetch("/client_trips", {
       method: "POST",
@@ -38,9 +38,8 @@ function ClientSignupForm({ id, handleSignup }) {
           response.json().then(err => setError(err.error));
         } else {
           response.json().then(booking => {
-            {
-              handleSignup(booking);
-            }
+            handleSignup(booking);
+            formikBag.resetForm();
           });
         }
       })

@@ -3,6 +3,7 @@ import { CurrentUserContext } from "./App.js";
 import ClientCarousel from "./ClientCarousel.js";
 import ClientSignupForm from "./ClientSignupForm.js";
 import ClientReviewForm from "./ClientReviewForm.js";
+import DeleteReviewModal from "./DeleteReviewModal.js";
 
 function ClientById() {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
@@ -24,13 +25,21 @@ function ClientById() {
   );
 
   function handleSignup(booking) {
-    const updatedClientTrips = currentUser.client_trips.concat(booking);
+    const updatedClientTrips = client_trips.concat(booking);
     const updatedClient = { ...currentUser, client_trips: updatedClientTrips };
     setCurrentUser(updatedClient);
   }
 
   function handleCreateReview(review) {
-    console.log(review);
+    const updatedReviews = reviews.concat(review);
+    const updatedClient = { ...currentUser, reviews: updatedReviews };
+    setCurrentUser(updatedClient);
+  }
+
+  function handleDeleteReview(review_id) {
+    const updatedReviews = reviews.filter(review => review.id !== review_id);
+    const updatedClient = { ...currentUser, reviews: updatedReviews };
+    setCurrentUser(updatedClient);
   }
 
   return (
@@ -105,7 +114,10 @@ function ClientById() {
               <p>{review.date}</p>
               <p>{review.comment}</p>
               <button>Edit Review</button>
-              <button>Delete Review</button>
+              <DeleteReviewModal
+                id={review.id}
+                handleDeleteReview={handleDeleteReview}
+              />
             </div>
           ))}
         </div>

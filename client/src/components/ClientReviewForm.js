@@ -17,7 +17,7 @@ function ClientReviewForm({ id, handleCreateReview }) {
       .required("Please write your review before submitting"),
   });
 
-  const onSubmit = values => {
+  const onSubmit = (values, formikBag) => {
     setError(null);
     fetch("/reviews_client", {
       method: "POST",
@@ -32,9 +32,8 @@ function ClientReviewForm({ id, handleCreateReview }) {
           response.json().then(err => setError(err.error));
         } else {
           response.json().then(review => {
-            {
-              handleCreateReview(review);
-            }
+            handleCreateReview(review);
+            formikBag.resetForm();
           });
         }
       })

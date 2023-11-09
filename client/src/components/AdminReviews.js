@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { CurrentUserContext } from "./App.js";
-import AdminDeleteReviewModal from "./AdminDeleteReviewModal.js";
+import DeleteReviewModal from "./DeleteReviewModal.js";
 
 function AdminReviews() {
   const { reviews, setReviews } = useContext(CurrentUserContext);
@@ -27,7 +27,7 @@ function AdminReviews() {
                   {review.client.full_name}
                 </td>
                 <td className="px-2 py-4 border-t-2 border-b-2">
-                  <AdminDeleteReviewModal
+                  <DeleteReviewModal
                     id={review.id}
                     handleDeleteReview={handleDeleteReview}
                   />
